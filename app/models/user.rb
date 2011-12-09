@@ -9,7 +9,7 @@ class User < ActiveRecord::Base
   attr_accessible :email, :password, :password_confirmation, :remember_me
 
   def bushido_extra_attributes(extra_attributes)
-    self.name = extra_attributes["first_name"] + extra_attributes["last_name"]
+    self.name = extra_attributes["first_name"].to_s + " " + extra_attributes["last_name"].to_s
     self.name = extra_attributes["email"].split("@").first if self.name.length == 1
   end
 end

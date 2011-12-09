@@ -1,7 +1,7 @@
 - content_for :header do
   :javascript
     $.data(document, 'channel_id',      #{@channel.id})
-    $.data(document, 'last_message_id', #{@messages.last.id})
+    $.data(document, 'last_message_id', #{@messages.try(:last).try(:id) || 0})
 
 %audio{:class => "audio_stage"}
 

@@ -3,23 +3,23 @@ $ ->
   console.log("kogo started!")
 
 
+# NOTES To add an action, add a key and a value to the below window.commands object.
+# The value should be a regular expression
+# Then define a window.perform_example method on the window object
+# where "example" is the name of the key listed in the commands object
+
 # window.commands
 window.commands = {
   "play": /^\/play .*/
-  ,"": /^\/me .*/
 }
 
 
 # window.perform_play(name)
 window.perform_play = (message) ->
   console.log message
-  sounds = {"gobushido": "hey.mp3", "claps": "cheer.mp3"}
+  sounds = {"gobushido": "hey.mp3", "claps": "cheer.mp3", "kolaveri": "kolaveri.mp3"}
   for sound, file_name of sounds
     play_sound(file_name) if message.trim().match(sound)
-
-
-# window.perform_me(message)
-# window.perform_me = (message) ->
 
 
 # perform(command, message)
@@ -63,4 +63,8 @@ update_channel = () ->
   messages_url = "/channels/" + $.data(document, 'channel_id') + "/messages.json" + last_message_param
   jQuery.get(messages_url, messages_callback)
 
+# Adds sets the interval for the update_channel() function
+# It's being set to the window object so that code on any
+# other part of the page can use that to stop updating the channel
+# Useful for testing it out during development
 window.channel_update_interval = setInterval(update_channel, 1500) if $.data(document, 'channel_id') != null
