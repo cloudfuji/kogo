@@ -5,6 +5,9 @@ $ ->
   $messageBox = $('#message_content')
   $form = $('#new_message')
 
+  channelId = () ->
+    $.data(document, 'channelId')
+
   formToData = () ->
     data = {}
     data['message'] = {}
@@ -15,7 +18,7 @@ $ ->
   sendMessage = (event) ->
     if event.which == 13
       data = formToData()
-      target = "/channels/1/messages.json"
+      target = "/channels/#{ channelId() }/messages.json"
       $.post(target, data)
       $messageBox.val("")
       $messageBox.focus()

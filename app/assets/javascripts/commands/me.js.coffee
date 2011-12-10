@@ -1,8 +1,16 @@
 $ ->
   console.log("Loading me")
 
-  me = (params, raw) ->
-    name = $.data(document, 'me')
+  me = (params, raw, message) ->
+    console.log("******************************************************************************************")
+    console.log(params)
+    console.log(raw)
+    console.log(message)
+    i = $.data(document, 'me')
+    console.log(i)
+    name = message['user']
+    console.log(name)
+    console.log("******************************************************************************************")
     action = raw.split(" ").slice(1).join(" ")
     $("<div><strong>*** #{ name } #{ action } ***</strong></div>")
 

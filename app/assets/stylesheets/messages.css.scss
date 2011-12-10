@@ -2,16 +2,37 @@
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
 $self_message_color: #FFFFCC;
+$announcement_message_color: #CCCCFF;
 
 #message_content {
   width: 100%;
 }
 
 .message-holder {
-  border-top: 1px dotted black;
+  bottom: 1px dotted gray;
   padding: 3px;
 }
 
 .me {
   background: $self_message_color;
+}
+
+.announcement {
+  background: $announcement_message_color;
+}
+
+.message-author {
+  font-weight: bold;
+}
+
+.message-content {
+  padding-left: 10px;
+}
+
+.youtube-preview img {
+  width: 300px;
+}
+
+.image-embed img {
+  width: 300px;
 }

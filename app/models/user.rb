@@ -6,10 +6,20 @@ class User < ActiveRecord::Base
   devise :bushido_authenticatable, :trackable
 
   # Setup accessible (or protected) attributes for your model
-  attr_accessible :email, :password, :password_confirmation, :remember_me
+  attr_accessible :first_name, :last_name, :email, :password, :password_confirmation, :remember_me
+
+  def self.kogo
+    User.find(1)
+  end
+
+  def name
+    return "#{self.first_name} #{self.last_name}" if self.first_name and self.last_name
+    return self.email.split("@").first
+  end
 
   def bushido_extra_attributes(extra_attributes)
-    self.name = extra_attributes["first_name"].to_s + " " + extra_attributes["last_name"].to_s
-    self.name = extra_attributes["email"].split("@").first if self.name.length == 1
+    self.first_name = extra_attributes["first_name"].to_s
+    self.last_name  = extra_attributes["last_name"].to_s
+    self.email      = extra_attributes["email"]
   end
 end

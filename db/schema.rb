@@ -15,6 +15,7 @@ ActiveRecord::Schema.define(:version => 20111209085115) do
 
   create_table "channels", :force => true do |t|
     t.string   "name",       :null => false
+    t.text     "users"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
@@ -34,7 +35,10 @@ ActiveRecord::Schema.define(:version => 20111209085115) do
     t.datetime "last_sign_in_at"
     t.string   "current_sign_in_ip"
     t.string   "last_sign_in_ip"
-    t.string   "name"
+    t.string   "first_name"
+    t.string   "last_name"
+    t.string   "email"
+    t.string   "locale"
     t.datetime "created_at"
     t.datetime "updated_at"
   end

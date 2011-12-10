@@ -11,8 +11,8 @@ $ ->
   capitalize = (string) ->
     string.charAt(0).toUpperCase() + string.slice(1)
 
-  perform = (fn, params, raw) ->
-    fn(params, raw)
+  perform = (fn, params, raw, message) ->
+    fn(params, raw, message)
 
   extractCommand = (message) ->
     for command, details of window.kogo.commands.list
@@ -30,7 +30,9 @@ $ ->
     $element.appendTo(".messages")
 
   defaultMessage = (user, content) ->
-    $("<div class='message-holder'><span class='message-author'>#{ user }:</span><span class='message-content'>#{ content #}</span></div>")
+    userString = ""
+    userString = "<span class='message-author'>#{ user }:</span>" if user != 'kogo bot'
+    $("<div class='message-holder'></span>#{ userString #}<span class='message-content'>#{ content #}</span></div>")
 
   lastMessageId = ->
     $.data document, 'lastMessageId'
@@ -52,36 +54,45 @@ $ ->
   scrollToLastMessage = () ->
     $('html, body').animate({scrollTop: $("#page").offset().top}, 2000);
 
+  unprocessedMessage = (message) ->
+    !isMessageDisplayed(message['id'])
+
   # processMessage(messages)
   processMessage = (messages) ->
     console.log("Got messages")
     console.log(messages)
     if messages.length > 0
       for message in messages
-        content = message["content"].trim()
-        user    = message["user"]
-        id      = message["id"]
-        command = extractCommand(content)
-        console.log("Is message displayed?")
-        console.log(isMessageDisplayed(id))
-        console.log("command:")
-        console.log(command)
-        params  = content.slice(command.length - 1, content.length)
-        console.log("params:")
-        console.log(params)
-        $output = perform(command, params, content) if command
-        console.log("output:")
-        console.log($output)
-        output_id = "message_#{ id }"
-        $output ?= defaultMessage(user, content)
-        $output.attr('id', output_id)
-        console.log(user)
-        console.log("#{ user } == #{ $.data(document, 'me') }: #{user == $.data(document, 'me')}")
-        $output.addClass('me') if user == $.data(document, 'me')
-        $output.addClass('message-holder')
-        displayMessage($output) if not isMessageDisplayed(id)
-        $.data($("#{ output_id }", 'user', user))
-    setLastMessageId(getLastDisplayedMessageId())
+        if unprocessedMessage(message)
+          content = message["content"].trim()
+          user    = message["user"]
+          id      = message["id"]
+          command = extractCommand(content)
+          console.log("Is message displayed?")
+          console.log(isMessageDisplayed(id))
+          console.log("command:")
+          console.log(command)
+          params  = content.slice(command.length - 1, content.length)
+          console.log("params:")
+          console.log(params)
+          $output = perform(command, params, content, message) if command
+          console.log("output:")
+          console.log($output)
+          output_id = "message_#{ id }"
+          $output ?= defaultMessage(user, content)
+          $output.attr('id', output_id)
+          console.log(user)
+          console.log("#{ user } == #{ $.data(document, 'me') }: #{user == $.data(document, 'me')}")
+          $output.addClass('me') if user == $.data(document, 'me')
+          console.log("#{ user } == 'kogo bot': #{user == 'kogo bot'}")
+          $output.addClass('announcement') if user == "kogo bot"
+          $output.addClass('message-holder')
+          displayMessage($output) if not isMessageDisplayed(id)
+          $.data($("#{ output_id }", 'user', user))
+      setLastMessageId(getLastDisplayedMessageId())
+    # Unlock the updater
+    console.log("finished updating, unlocking")
+    window.kogo.channel.updateLock = false
 
   interface =
     processMessage: processMessage

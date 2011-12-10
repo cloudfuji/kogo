@@ -3,7 +3,12 @@ class DeviseCreateUsers < ActiveRecord::Migration
     create_table(:users) do |t|
       t.bushido_authenticatable
       t.trackable
-      t.string :name
+
+      t.string :first_name
+      t.string :last_name
+      t.string :email
+      t.string :locale
+
       t.timestamps
     end
 

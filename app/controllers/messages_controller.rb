@@ -8,8 +8,11 @@ class MessagesController < ApplicationController
   def index
     puts "params:"
     puts params.inspect
-    channel = Channel.find(params[:channel_id])
 
+    channel = Channel.find_by_name(params[:channel_id])
+    channel.touch_user(current_user)
+    channel.update_users!
+    
     if params[:last_message_id]
       @messages = channel.messages.includes(:user).where("id > ?", params[:last_message_id])
     else
