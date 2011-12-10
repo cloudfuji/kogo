@@ -6,12 +6,14 @@ class MessagesController < ApplicationController
   # GET /messages
   # GET /messages.json
   def index
+    puts "params:"
+    puts params.inspect
     channel = Channel.find(params[:channel_id])
 
     if params[:last_message_id]
       @messages = channel.messages.includes(:user).where("id > ?", params[:last_message_id])
     else
-      @messages = channel.messages.includes(:user).limit(5).order(:created_at).reverse_order
+      @messages = channel.messages.includes(:user).limit(50).order(:created_at).reverse_order
     end
 
     @message_data = []
@@ -19,7 +21,7 @@ class MessagesController < ApplicationController
       @message_data.push({
           :id => message.id,
           :user => message.user.name,
-          :content => message.content
+          :content => message.escaped_content
         })
     end
     

@@ -10,6 +10,8 @@
 
 </head>
 <body>
+  <audio class="audio_stage"></audio>
+
 
 <%- if user_signed_in? %>
   <%= link_to "logout", destroy_user_session_path, :method => :delete %>
@@ -17,5 +19,10 @@
 
 <%= yield %>
 
+<% if user_signed_in? %>
+<script type="text/javascript">
+  (function() { $.data(document, 'me', '<%= current_user.name %>'); })();
+</script>
+<% end %>
 </body>
 </html>

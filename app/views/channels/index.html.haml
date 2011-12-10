@@ -1,19 +1,13 @@
-%h1 Listing channels
+%h1 Your channels
+= link_to 'Want another one?', new_channel_path
 
 %table
   %tr
-    %tr name
-    %th
     %th
     %th
       
   - @channels.each do |channel|
     %tr
-      %td= channel.name
-      %td= link_to 'Show', channel
-      %td= link_to 'Edit', edit_channel_path(channel)
+      %td= link_to channel.name, channel
       %td= link_to 'Destroy', channel, :confirm => 'Are you sure?', :method => :delete
 
-%br
-
-= link_to 'New Channel', new_channel_path
