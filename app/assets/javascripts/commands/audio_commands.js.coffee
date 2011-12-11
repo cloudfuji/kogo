@@ -13,8 +13,9 @@ $ ->
     "kolaveri" : localFileUrl("kolaveri.mp3")
     "ding"     : localFileUrl("ding.mp3")
 
-  pause = (url) ->
+  pause = () ->
     audio.pause()
+    $("<div class='message'>stopping the muzak</div>")
 
   play = (url) ->
     console.log("playing #{ url }")
@@ -38,7 +39,7 @@ $ ->
     window.kogo.audio.toggle())
 
   window.kogo.commands.register('play', /^\/play .*/, playCommand)
-  window.kogo.commands.register('play', /^\/stfu .*/, pause)
-  window.kogo.commands.register('play', /^\/stop .*/, pause)
+  window.kogo.commands.register('stfu', /^\/stfu/, pause)
+  window.kogo.commands.register('stop', /^\/stop/, pause)
 
   console.log("finished")
