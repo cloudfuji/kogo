@@ -11,6 +11,7 @@ $ ->
     "gobushido": localFileUrl("hey.mp3")
     "claps"    : localFileUrl("cheer.mp3")
     "kolaveri" : localFileUrl("kolaveri.mp3")
+    "ding"     : localFileUrl("ding.mp3")
 
   play = (url) ->
     console.log("playing #{ url }")
@@ -28,6 +29,10 @@ $ ->
       return play(url) if params.trim().match(sound)
     if params.trim().match(/^http/)
       play(params.trim())
+
+  $('#audio_toggle').click((event) ->
+    event.preventDefault
+    window.kogo.audio.toggle())
 
   window.kogo.commands.register('play', /^\/play .*/, playCommand)
 

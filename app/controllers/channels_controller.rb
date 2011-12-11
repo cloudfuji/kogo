@@ -19,6 +19,7 @@ class ChannelsController < ApplicationController
     puts "Looking up #{params[:id]}"
     puts "params: #{params.inspect}"
     @channel  = Channel.find_by_name!(params[:id])
+    @title = @channel.name
     @messages = @channel.messages.includes(:user).limit(50).order("created_at DESC").reverse
 
     # don't use #build. it adds the new message to the list of messages channel already has

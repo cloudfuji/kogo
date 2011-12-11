@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Kogo</title>
+  <title><%= " #{@title}" || " Kogo" %></title>
   <%= stylesheet_link_tag    "application" %>
   <%= javascript_include_tag "application" %>
   <%= csrf_meta_tags %>
@@ -10,7 +10,8 @@
 
 </head>
 <body>
-  <audio class="audio_stage"></audio>
+  <audio class="audio_private"></audio>
+  <audio class="audio_common"></audio>
 
 <%- if user_signed_in? %>
   <%= link_to "logout", destroy_user_session_path, :method => :delete %>
