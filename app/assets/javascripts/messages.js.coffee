@@ -37,10 +37,16 @@ $ ->
   displayMessage = ($element) ->
     $element.appendTo(".messages")
 
-  defaultMessage = (user, content) ->
-    userString = ""
-    userString = "<span class='message-author'>#{ user }:</span>" if user != 'kogo bot'
-    $("<div class='message-holder'></span>#{ userString #}<span class='message-content'>#{ content #}</span></div>")
+  defaultMessage = (user, content, posted_at) ->
+    metaString = ""
+    userString = "<span class='message-author'>#{ user }</span>"
+    timeString = "<span class='message-time'>at #{ posted_at }</span>"
+
+    if user != 'kogo bot'
+      metaString = "<hr><div class='message-meta'>#{userString} #{timeString}</div>"
+      metaString = "<div class='message-meta'>#{timeString}</div>" if user == $('.message-author').eq(-1).text().trim()
+
+    $("<div class='message-holder'>#{ metaString #}<div class='message-content'>#{ content #}</div></div>")
 
   lastReadMessageId = () ->
     parseInt($.data(document, 'lastReadMessageId'))

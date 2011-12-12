@@ -28,6 +28,16 @@ GIT
       rake
       rest-client
 
+GIT
+  remote: https://github.com/chriseppstein/compass.git
+  revision: 7d22d3668c30eb920c559888c37a922a227cc06a
+  branch: master
+  specs:
+    compass (0.12.alpha.2.7d22d36)
+      chunky_png (~> 1.2)
+      fssm (>= 0.2.7)
+      sass (~> 3.1)
+
 GEM
   remote: http://rubygems.org/
   specs:
@@ -64,6 +74,7 @@ GEM
     awesome_print (1.0.1)
     bcrypt-ruby (3.0.1)
     builder (3.0.0)
+    chunky_png (1.2.5)
     coffee-rails (3.1.1)
       coffee-script (>= 2.2.0)
       railties (~> 3.1.0)
@@ -84,6 +95,7 @@ GEM
     factory_girl_rails (1.4.0)
       factory_girl (~> 2.3.0)
       railties (>= 3.0.0)
+    fssm (0.2.7)
     haml (3.1.4)
     haml-rails (0.3.4)
       actionpack (~> 3.0)
@@ -181,6 +193,7 @@ DEPENDENCIES
   awesome_print
   bushido!
   coffee-rails (~> 3.1.1)
+  compass!
   devise_bushido_authenticatable!
   factory_girl_rails
   haml-rails

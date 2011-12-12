@@ -1,6 +1,10 @@
 Kogo::Application.routes.draw do
 
   resources :channels do
+    member do
+      get 'search'
+    end
+
     resources :messages
   end
   
