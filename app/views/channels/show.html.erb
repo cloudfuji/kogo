@@ -1,9 +1,9 @@
 <%- content_for :header do %>
   <script language="javascript">
-    $.data(document, 'channelId',        "#{@channel.to_param}")
-    $.data(document, 'lastMessageId',     #{@messages.try(:last).try(:id) || 0})
-    $.data(document, 'lastReadMessageId', #{@messages.try(:last).try(:id) || 0})
-    $.data(document, 'users',             #{@channel.users.keys           || []})
+    $.data(document, 'channelId',         <%= "#{@channel.to_param}" %>)
+    $.data(document, 'lastMessageId',     <%= "#{@messages.try(:last).try(:id) || 0}" %>)
+    $.data(document, 'lastReadMessageId', <%= "#{@messages.try(:last).try(:id) || 0}"  %>)
+    $.data(document, 'users',             <%= "#{@channel.users.keys           || []}" %>)
   </script>
 <%- end %>
 
