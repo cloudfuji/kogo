@@ -13,16 +13,33 @@
   <audio class="audio_private"></audio>
   <audio class="audio_common"></audio>
 
-<%- if user_signed_in? %>
-  <%= link_to "logout", destroy_user_session_path, :method => :delete %>
-<%- end %>
+  
 
-<%= yield %>
+  <div class="container">
+    <div class="nav_wrapper">
+      <div class="nav_bar">
+	<div class="app_name">
+	  <%= image_tag "kogo-logo.png", :alt => "Kogo" %>
+	</div>
+	<div class="nav_links">
+	  <%- if user_signed_in? %>
+	    <%= link_to "Logout", destroy_user_session_path, :method => :delete %>
+	  <%- end %>
+	</div>
+      </div>
+    </div>
+    <%= yield %>
+    <div class="container_footer"></div>
+  </div>
 
-<% if user_signed_in? %>
-<script type="text/javascript">
-  (function() { $.data(document, 'me', '<%= current_user.name %>'); })();
-</script>
-<% end %>
+  <div class="footer">
+    <%= yield :footer %>
+  </div>
+
+  <% if user_signed_in? %>
+    <script type="text/javascript">
+      (function() { $.data(document, 'me', '<%= current_user.name %>'); })();
+    </script>
+  <% end %>
 </body>
 </html>

@@ -16,14 +16,18 @@ class ChannelsController < ApplicationController
   # GET /channels/1
   # GET /channels/1.json
   def show
-    puts "Looking up #{params[:id]}"
-    puts "params: #{params.inspect}"
     @channel  = Channel.find_by_name!(params[:id])
     @title = @channel.name
     @messages = @channel.messages.includes(:user).limit(50).order("created_at DESC").reverse
-
+    
     # don't use #build. it adds the new message to the list of messages channel already has
     @message = Message.new :channel_id => @channel.id
+
+    @channels = Channel.all
+    @users = []
+    @channel.users.each do |user|
+      @users << User.find(user.first)
+    end
     
     respond_to do |format|
       format.html # show.html.erb
@@ -41,6 +45,23 @@ class ChannelsController < ApplicationController
       format.json { render json: @channel }
     end
   end
+
+  # Very simple search query
+  def search
+    @channel = Channel.find_by_name(params[:id])
+    @messages = []
+    minimum_query_length = 3
+
+    if params[:query] and params[:query].length >= minimum_query_length
+      @messages = @channel.messages.where("content LIKE ?", "%#{params[:query]}%").limit(params[:limit] || 100).all
+    end
+
+    respond_to do |format|
+      format.html {}
+      format.json { render :json => @messages.to_json }
+    end
+  end
+
 
   # GET /channels/1/edit
   def edit

@@ -1,0 +1,10 @@
+<br />
+You must enter in at least three characters to search for
+<form action="/channels/<%= @channel.to_param %>/search">
+  <input id="query" name="query" type="text">
+  <input name="submit" type="submit" value="Search">
+</form>
+
+<% @messages.each do |message| %>
+  <%= message.user.name %>: <%= message.content %><br />
+<% end %>

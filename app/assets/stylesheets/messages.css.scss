@@ -1,17 +1,7 @@
-// Place all the styles related to the Messages controller here.
-// They will automatically be included in application.css.
-// You can use Sass (SCSS) here: http://sass-lang.com/
+@import "compass/css3";
+
 $self_message_color: #FFFFCC;
 $announcement_message_color: #CCCCFF;
-
-#message_content {
-  width: 100%;
-}
-
-.message-holder {
-  bottom: 1px dotted gray;
-  padding: 3px;
-}
 
 .me {
   background: $self_message_color;
@@ -21,18 +11,35 @@ $announcement_message_color: #CCCCFF;
   background: $announcement_message_color;
 }
 
-.message-author {
-  font-weight: bold;
-}
-
-.message-content {
-  padding-left: 10px;
-}
-
 .youtube-preview img {
   width: 300px;
 }
 
 .image-embed img {
   width: 300px;
+}
+
+.messages {
+  width: 84%;
+  float: left;
+  @include single-box-shadow;
+
+  .message-holder {
+    bottom: 1px dotted gray;
+    padding: 3px;
+
+    .message-meta {
+      .message-time {
+	color: #666;
+	font-size: 10px;
+      }
+      .message-author {
+	font-weight: bold;
+      }
+    }
+
+    .message-content {
+      padding-left: 10px;
+    }
+  }
 }
