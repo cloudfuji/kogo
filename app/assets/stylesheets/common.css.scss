@@ -1,12 +1,9 @@
 @import "compass/utilities";
-@import "blueprint/liquid";
 @import "compass/css3";
 @import "compass/layout/sticky-footer";
 @import "compass/utilities/color";
 @import "compass/layout/sticky-footer";
 
-$blueprint-liquid-grid-columns: 16;
-$blueprint-liquid-container-width: 80%;
 $nav-bar-height: 33px;
 $sticky-footer-height: 50px;
 
@@ -35,12 +32,12 @@ body {
   border-bottom: 5px solid $orange;
 
   .nav_bar {
-    width: 100%;
     padding-top: 5px;
     padding-bottom: 50px;
 
     .app_name {
-      @include column(4);
+      width: 16%;
+      float: left;
 
       a {
         color: #fff;
@@ -51,7 +48,8 @@ body {
     }
 
     .nav_links {
-      @include column(20, last);
+      width: 84%;
+      float: right;
       text-align: right;
 
       a {
@@ -65,7 +63,7 @@ body {
 }
 
 .container {
-  @include container;
+  width: 100%;
   padding-top: $nav-bar-height + 5px;
   width: 100%;
   min-height: 100%;
