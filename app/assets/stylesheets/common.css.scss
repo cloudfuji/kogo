@@ -80,14 +80,19 @@ body {
   width: 100%;
   bottom: 0;
   position: fixed;
-  background: #CCC;
+  background: #fff;
 
   .chatbox form {
     @include column(20);
 
-    textarea {
+    #message_content {
       margin: 5px;
+      font-size: 13px;
       height: 30px;
+      width: 99%;
+      margin-right: 10px;
+      @include linear-gradient(color-stops(white, white, #DDD), bottom);
+      @include border-radius(4px);
     }
   }
 

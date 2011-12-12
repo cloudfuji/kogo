@@ -17,18 +17,18 @@
 
   <div class="container">
     <div class="nav_wrapper">
-    <div class="nav_bar">
-      <div class="app_name">
-	Kogo
-      </div>
-      <div class="nav_links">
-	<%- if user_signed_in? %>
-	  <%= link_to "Logout", destroy_user_session_path, :method => :delete %>
-	<%- end %>
+      <div class="nav_bar">
+	<div class="app_name">
+	  Kogo
+	</div>
+	<div class="nav_links">
+	  <%- if user_signed_in? %>
+	    <%= link_to "Logout", destroy_user_session_path, :method => :delete %>
+	  <%- end %>
+	</div>
       </div>
     </div>
-  </div>
-    <%= yield %>  
+    <%= yield %>
     <div class="container_footer"></div>
   </div>
 
