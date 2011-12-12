@@ -5,7 +5,7 @@ $ ->
 
   imageEmbed = (params, raw) ->
     console.log("embedding an image:")
-    $("<div><a href='#{ raw }' ><img class = 'image-embed' src='#{ raw }' /></a></div>")
+    $("<div><a target=\"_blank\" href='#{ raw }' ><img class='image-embed' src='#{ raw }' /></a></div>")
 
   window.kogo.commands.register('image', image_pattern, imageEmbed)
 
