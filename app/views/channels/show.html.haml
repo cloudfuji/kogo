@@ -8,15 +8,20 @@
 .messages
   - @messages.each do |message|
     %div{:id => "message_#{message.id}", :class => "message-holder #{'me' if current_user == message.user}"}
-      %span{:class => "message-author"}
-        = "#{message.user.name}: "
-      %span{:class => "message-content"}
+      %div{:class => "message-meta"}
+        %span{:class => "message-author"}
+          = "#{message.user.name}"
+        %span{:class => "message-time"}
+          = "at #{message.created_at.strftime("%I:%M%p") }"
+      %div{:class => "message-content"}
         = message.content
 
-=form_for([@channel, @message], :remote => true) do |f|  
-  =f.hidden_field :channel_id, :value =>  @message.channel_id
-  =f.text_field :content
-  =f.submit "send message"
+-content_for :footer do
+  .chatbox
+    =form_for([@channel, @message], :remote => true) do |f|  
+      =f.hidden_field :channel_id, :value =>  @message.channel_id
+      =f.text_area :content, :rows => 20
 
-%a{:id => "audio_toggle", :href => "#"}
-  Audio Toggle
+  .options      
+    %a{:id => "audio_toggle", :href => "#"}
+      Audio Toggle

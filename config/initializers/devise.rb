@@ -3,7 +3,8 @@
 Devise.setup do |config|
 
   if Rails.env.development?
-    config.cas_base_url = "https://noshido.com:5000/cas"
+    # config.cas_base_url = "https://noshido.com:5000/cas"
+    config.cas_base_url = "https://bushi.do/cas"
   end
   
   # ==> Mailer Configuration
