@@ -6,6 +6,7 @@
 
 # Ignore bundler config
 /.bundle
+/config/database.yml
 /app/assets/stylesheets/.sass-cache/
 /.bushido
 

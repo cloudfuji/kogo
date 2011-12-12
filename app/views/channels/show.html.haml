@@ -16,12 +16,24 @@
       %div{:class => "message-content"}
         = message.content
 
+.sidebar
+  .rooms_title Rooms
+  .rooms
+    - @channels.each do |channel|
+      .room= "#{channel.name} (#{channel.users.count})"
+
+  .users_title Users Online
+  .users
+    - @users.each do |user|
+      .user
+        = "#{user.first_name} #{user.last_name}"
+  
 -content_for :footer do
   .chatbox
     =form_for([@channel, @message], :remote => true) do |f|  
       =f.hidden_field :channel_id, :value =>  @message.channel_id
       =f.text_area :content, :rows => 20
 
-  .options      
-    %a{:id => "audio_toggle", :href => "#"}
-      Audio Toggle
+  .actions   
+    =image_tag("sound-on.png", :id => "audio_toggle")
+      

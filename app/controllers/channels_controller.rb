@@ -21,9 +21,15 @@ class ChannelsController < ApplicationController
     @channel  = Channel.find_by_name!(params[:id])
     @title = @channel.name
     @messages = @channel.messages.includes(:user).limit(50).order("created_at DESC").reverse
-
+    
     # don't use #build. it adds the new message to the list of messages channel already has
     @message = Message.new :channel_id => @channel.id
+
+    @channels = Channel.all
+    @users = []
+    @channel.users.each do |user|
+      @users << User.find(user.first)
+    end
     
     respond_to do |format|
       format.html # show.html.erb
