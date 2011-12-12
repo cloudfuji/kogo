@@ -2,7 +2,7 @@
 $ ->
   console.log("Loading UI logic")
 
-  $messageBox = $('#message_content')
+  getMessageBox = window.kogo.messages.messageBox
   $form = $('#new_message')
 
   channelId = () ->
@@ -20,12 +20,12 @@ $ ->
       data = formToData()
       target = "/channels/#{ channelId() }/messages.json"
       $.post(target, data)
-      $messageBox.val("")
-      $messageBox.focus()
+      getMessageBox().val("")
+      getMessageBox().focus()
       event.preventDefault
       event.stopPropagation
 
-  $messageBox.keypress(sendMessage)
+  getMessageBox().keypress(sendMessage)
 
 
   console.log("finished")

@@ -6,11 +6,15 @@ $ ->
   $(window).focus(() ->
     focused = true
     updateLastReadMessageId()
+    messageBox().focus()
     document.title = " #{$.data(document, 'channelId')}").blur(() ->
       focused = false)
 
   isFocused = () ->
     focused
+
+  messageBox = () ->
+    $('#message_content')
 
   isMessageDisplayed = (id) ->
     !($("#message_#{ id }").length == 0)
@@ -81,6 +85,7 @@ $ ->
     getLastDisplayedMessageId : getLastDisplayedMessageId
     updateLastReadMessageId   : updateLastReadMessageId
     isFocused                 : isFocused
+    messageBox                : messageBox
 
   window.kogo.messages = interface
 
