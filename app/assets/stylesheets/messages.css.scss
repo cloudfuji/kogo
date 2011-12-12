@@ -20,7 +20,8 @@ $announcement_message_color: #CCCCFF;
 }
 
 .messages {
-  @include column(20);
+  width: 84%;
+  float: left;
 
   .message-holder {
     bottom: 1px dotted gray;
