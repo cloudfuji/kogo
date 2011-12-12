@@ -1,4 +1,4 @@
-@import "blueprint/liquid";
+@import "compass/css3";
 
 $self_message_color: #FFFFCC;
 $announcement_message_color: #CCCCFF;
@@ -22,6 +22,7 @@ $announcement_message_color: #CCCCFF;
 .messages {
   width: 84%;
   float: left;
+  @include single-box-shadow;
 
   .message-holder {
     bottom: 1px dotted gray;

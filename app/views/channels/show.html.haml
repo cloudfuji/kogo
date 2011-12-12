@@ -20,7 +20,10 @@
   .rooms_title Rooms
   .rooms
     - @channels.each do |channel|
-      .room= "#{channel.name} (#{channel.users.count})"
+      - if channel.id == @channel.id
+        %div{:class=>"room", :id => "selected"}= "#{channel.name} (#{channel.users.count})"      
+      - else
+        %div{:class=>"room"}= "#{channel.name} (#{channel.users.count})"
 
   .users_title Users Online
   .users

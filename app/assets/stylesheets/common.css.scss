@@ -79,36 +79,34 @@ body {
     .users_title, .rooms_title {
       font-size: 14px;
       @include linear-gradient(color-stops(#CCC, #CCC, white), bottom);
-    }
-    
-    .selected {
-      background: $dark-blue;
-    }
-
-    .users_title, .rooms_title {
       color: $dark-blue;
       font-weight: bold;
       text-align: right;
       padding-right: 5px;
     }
-
+    
     .users {
       .user {
 	text-align: right;
-	margin-top: 3px;
-	margin-bottom: 3px;
-	margin-right: 5px;
+	padding-top: 3px;
+	padding-bottom: 3px;
+	padding-right: 5px;
 	color: #DDD;
       }
     }
 
     .rooms {
       margin-bottom: 10px;
+      #selected {
+	background: $orange;
+	color: #fff;
+      }
+
       .room {
 	text-align: right;
-	margin-top: 3px;
-	margin-bottom: 3px;
-	margin-right: 5px;
+	padding-top: 3px;
+	padding-bottom: 3px;
+	padding-right: 5px;
 	color: #DDD;
       }
     }
