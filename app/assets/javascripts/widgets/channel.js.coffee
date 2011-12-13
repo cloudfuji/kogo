@@ -44,5 +44,5 @@
       jQuery.get(channelUrl, updateUsers)
 
   $.widget "kogo.channel", channel
-  console.log 'whats channel', channel
+
 ) jQuery
