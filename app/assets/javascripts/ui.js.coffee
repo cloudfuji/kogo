@@ -17,15 +17,19 @@ $ ->
 
   sendMessage = (event) ->
     if event.which == 13
-      data = formToData()
-      target = "/channels/#{ channelId() }/messages.json"
-      $.post(target, data)
-      getMessageBox().val("")
-      getMessageBox().focus()
-      event.preventDefault
-      event.stopPropagation
+      console.log(event)
+      event.preventDefault()
+      if event.shiftKey == false
+        data = formToData()
+        target = "/channels/#{ channelId() }/messages.json"
+        $.post(target, data)
+        getMessageBox().val("")
+        getMessageBox().focus()
+      else
+        getMessageBox().val(getMessageBox().val() + "\n")
+      event.stopPropagation()
 
-  getMessageBox().keypress(sendMessage)
+  getMessageBox().keydown(sendMessage)
 
 
   console.log("finished")
