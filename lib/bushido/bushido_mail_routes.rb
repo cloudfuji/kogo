@@ -7,4 +7,6 @@
 
 end
 
-Channel.all.each(&:instantiate_mail_route!)
+if Channel.table_exists?
+  Channel.all.each(&:instantiate_mail_route!)
+end
