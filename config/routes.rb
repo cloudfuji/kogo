@@ -6,6 +6,7 @@ Kogo::Application.routes.draw do
     end
 
     resources :messages
+    resources :attachments
   end
   
   devise_for :users

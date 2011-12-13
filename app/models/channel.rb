@@ -1,5 +1,6 @@
 class Channel < ActiveRecord::Base
   has_many :messages, :dependent => :destroy
+  has_many :attachments, :dependent => :destroy
 
   serialize :users, Hash
 
