@@ -32,7 +32,7 @@ $ ->
   displayMessage = ($element) ->
     currentScroll = $('body').scrollTop();
     $element.appendTo(".messages")
-    $('body').scrollTop(100000) if ($(document).height() - currentScroll) < 1000
+    $('body').scrollTop(100000) # if ($(document).height() - currentScroll) < 1000
 
   defaultMessage = (user, content, posted_at) ->
     metaString = ""
