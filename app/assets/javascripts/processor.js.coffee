@@ -56,9 +56,9 @@ $ ->
           $output ?= window.kogo.messages.defaultMessage(user, content, posted_at)
           $output.attr('id', output_id)
           #console.log(user)
-          #console.log("#{ user } == #{ $.data(document, 'me') }: #{user == $.data(document, 'me')}")
-          notifyNewMessage = true if user != $.data(document, 'me')
-          $output.addClass('me') if user == $.data(document, 'me')
+          #console.log("#{ user } == #{ $(document).data('me') }: #{user == $(document).data('me')}")
+          notifyNewMessage = true if user != $(document).data('me')
+          $output.addClass('me') if user == $(document).data('me')
           #console.log("#{ user } == 'kogo bot': #{user == 'kogo bot'}")
           $output.addClass('announcement') if user == "kogo bot"
           $output.addClass('message-holder')
