@@ -9,7 +9,7 @@
 
 //- require_directory ./commands
 //= require_directory ./widgets
-
+//= require kogo
 
 /* initial scripts */
 //- require_directory ./alpha
