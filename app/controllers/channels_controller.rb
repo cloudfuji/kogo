@@ -18,9 +18,12 @@ class ChannelsController < ApplicationController
   def show
     @channel  = Channel.includes(:attachments).find_by_name!(params[:id])
     @users = []
-    @channel.users.each do |user|
-      @users << User.find(user.first)
+    @channel.users.each do |user_id, timestamp|
+      user = User.find(user_id)
+      @users << {:first_name => user.first_name, :last_name => user.last_name, :id => user.id }
     end
+
+    @channel.users = @users
     
     @title = @channel.name
     @messages = @channel.messages.includes(:user).limit(50).order("created_at DESC").reverse
