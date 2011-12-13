@@ -1,32 +1,19 @@
-(($, undefined_) ->
+user_list =
+  options: {
+    intervalTime: 30000
+  }
 
-  widget_obj =
-    options: {
-      intervalTime: 30000
-    }
+  _create: ->
+    userUpdateInterval = setInterval(@retriveUsers, @options.intervalTime)
+    @retriveUsers()
 
-    _create: ->
-      $ele = @element
-      self = this
+  retrieveUsers: ->
+    channelUrl = "/channels/#{ channelId() }.json"
+    $.get(channelUrl, updateUsers)
 
-      window.userUpdateInterval = setInterval(self.retriveUsers, self.options.intervalTime)
-      this.retriveUsers()
+  updateUsers:(channel) ->
+    users = []
+    for user_id, time of channel['users']
+      users.push(parseInt(user_id))
 
-    _init: ->
-      return
-
-    destory: ->
-      $.widget::apply this, arguments
-
-    retrieveUsers: ->
-      channelUrl = "/channels/#{ channelId() }.json"
-      $.get(channelUrl, updateUsers)
-
-    updateUsers:(channel) ->
-      users = []
-      for user_id, time of channel['users']
-        users.push(parseInt(user_id))
-
-  $.widget "kogo.user_list", widget_obj
-
-) jQuery
+$.widget "kogo.user_list", user_list

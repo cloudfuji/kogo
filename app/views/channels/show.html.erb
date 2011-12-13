@@ -1,5 +1,3 @@
-<%- content_for :header do %>
-<%- end %>
 
 <div class="messages">
   <%- @messages.each do |message| %>
@@ -49,4 +47,12 @@
   <div class="actions">
     <%= image_tag("sound-on.png", :id => "audio_toggle") %>
   </div>
+
+  <script language="javascript">
+    $.data(document, 'channelId',         <%= "'#{@channel.to_param}\'" %>)
+    $.data(document, 'lastMessageId',     <%= "#{@messages.try(:last).try(:id) || 0}" %>)
+    $.data(document, 'lastReadMessageId', <%= "#{@messages.try(:last).try(:id) || 0}"  %>)
+    $.data(document, 'users',             <%= "#{@channel.users.keys           || []}" %>)
+  </script>
+
 <%-end %>

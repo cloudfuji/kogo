@@ -1,55 +1,46 @@
-(($, undefined_) ->
+audio =
+  options: {
+    enabled: true
+    toggle_element: $('#audio_toggle')
+  }
 
-  audio =
-    options: {
-      enabled: true
-    }
+  _create: ->
+    $ele = @element
+    self = this
 
-    _create: ->
-      $ele = @element
-      self = this
-      $('#audio_toggle').click((event) -> #this should be teased ou
-        event.preventDefault
-        window.kogo.audio.toggle())
+    @option.toggle_element.click(@toggle) -> #this should be teased out
 
-    _init: ->
-      return
 
-    destory: ->
-      $.widget::apply this, arguments
+  enable: ->
+    _audioPlayer.volume = 1
+    audioPlayer.volume = 1
+    @option.toggle_element.attr('src', '/assets/sound-on.png')
 
-    enable: ->
-      _audioPlayer.volume = 1
-      audioPlayer.volume = 1
-      $('#audio_toggle').attr('src', '/assets/sound-on.png')
+  disable: ->
+    _audioPlayer.volume = 0
+    audioPlayer.volume = 0
+    @option.toggle_element.attr('src', '/assets/sound-off.png')
 
-    disable: ->
-      _audioPlayer.volume = 0
-      audioPlayer.volume = 0
-      $('#audio_toggle').attr('src', '/assets/sound-off.png')
+  toggle: ->
+    if @option('enabled')
+      @disable()
+      @option('enabled',false)
+    else
+      @enable()
+      @option('enabled', true)
 
-    toggle: ->
-      if enabled
-        disable()
-        enabled = false
-      else
-        enable()
-        enabled = true
+  setAudioUrl: (url) ->
+    @element.setAttribute('src', url)
 
-    setAudioUrl: (url) ->
-      audioPlayer.setAttribute('src', url)
+  play: ->
+    if @enabled()
+      @element.play()
 
-    play: ->
-      if enabled
-        audioPlayer.play()
+  pause: ->
+    @element.pause()
 
-    pause: ->
-      audioPlayer.pause()
+  ding: ->
+    _audioPlayer.setAttribute('src', "http://#{ window.location.hostname }:#{ window.location.port }/sounds/ding.wav")
+    _audioPlayer.play()
 
-    ding: ->
-      _audioPlayer.setAttribute('src', "http://#{ window.location.hostname }:#{ window.location.port }/sounds/ding.wav")
-      _audioPlayer.play()
-
-  $.widget "kogo.audio", audio
-
-) jQuery
+$.widget "kogo.audio", audio
