@@ -18,6 +18,17 @@ GIT
       rubycas-client (>= 2.2.1)
 
 GIT
+  remote: https://github.com/Bushido/tane.git
+  revision: 5acb4620c4741f71748204792a5e6ca312588b74
+  specs:
+    tane (0.0.1)
+      awesome_print
+      erubis
+      highline
+      rake
+      rest-client
+
+GIT
   remote: https://github.com/chriseppstein/compass.git
   revision: 7d22d3668c30eb920c559888c37a922a227cc06a
   branch: master
@@ -26,16 +37,6 @@ GIT
       chunky_png (~> 1.2)
       fssm (>= 0.2.7)
       sass (~> 3.1)
-
-PATH
-  remote: ../tane
-  specs:
-    tane (0.0.1)
-      awesome_print
-      erubis
-      highline
-      rake
-      rest-client
 
 GEM
   remote: http://rubygems.org/
