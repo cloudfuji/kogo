@@ -1,0 +1,11 @@
+<%= link_to "< before", channel_messages_path(@channel, :history => true, :from => @base_time - 1.day) %> 
+
+<strong><%= @base_time.strftime('%A %b %e, %Y') %></strong>
+
+<%= link_to " after >", channel_messages_path(@channel, :history => true, :from => @base_time + 1.day) %>
+
+<br />
+
+<% @messages.each do |message| %>
+  <%= message.user.name %>: <%= message.escaped_content %><br />
+<% end %>
