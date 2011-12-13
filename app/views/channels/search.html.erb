@@ -6,5 +6,5 @@ You must enter in at least three characters to search for
 </form>
 
 <% @messages.each do |message| %>
-  <%= message.user.name %>: <%= message.content %><br />
+  <%= message.user.name %>: <%= message.escaped_content %><br />
 <% end %>

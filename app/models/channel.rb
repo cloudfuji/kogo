@@ -1,7 +1,10 @@
 class Channel < ActiveRecord::Base
   has_many :messages, :dependent => :destroy
+  has_many :attachments, :dependent => :destroy
 
   serialize :users, Hash
+
+  after_create Proc.new { |channel| channel.instantiate_mail_route! }
 
   def to_param
     name
@@ -20,7 +23,7 @@ class Channel < ActiveRecord::Base
   # processing
   def add_user(user)
     unless user_in_room?(user)
-      users[user.id] = Time.now
+      users[user.id] = [Time.now, user.name]
       save
 
       announce("#{ user.name } has entered the channel")
@@ -45,6 +48,15 @@ class Channel < ActiveRecord::Base
   def update_users!
     users.keys.each do |user_id|
       remove_user(User.find(user_id)) if (users[user_id] < 2.minutes.ago)
+    end
+  end
+
+  def instantiate_mail_route!
+    ::Bushido::Mailroute.map do |m|
+
+      m.route("mail.new_message") do
+        m.subject("{:channel_name}", :channel_name => self.name)
+      end
     end
   end
 end

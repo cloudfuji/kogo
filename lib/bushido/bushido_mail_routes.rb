@@ -6,3 +6,5 @@
   end
 
 end
+
+Channel.all.each(&:instantiate_mail_route!)

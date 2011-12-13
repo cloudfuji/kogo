@@ -8,18 +8,22 @@ gem 'rails', '3.1.3'
 gem 'haml-rails'
 gem 'sqlite3'
 
-gem "bushido", :git => "https://github.com/Bushido/bushidogem.git"
-gem "devise_bushido_authenticatable", :git => "https://github.com/Bushido/devise_cas_authenticatable.git"
+gem 'bushido', :git => 'https://github.com/Bushido/bushidogem.git'
+gem 'devise_bushido_authenticatable', :git => 'https://github.com/Bushido/devise_cas_authenticatable.git'
+
+gem 'aws-s3'
+gem 'paperclip'
 
 # Gems used only for assets and not required
 # in production environments by default.
 group :assets do
   gem 'sass-rails', '~> 3.1.5'
-  gem 'compass',    :git=>"https://github.com/chriseppstein/compass.git", :branch=>'master'
+  gem 'compass',    :git=>'https://github.com/chriseppstein/compass.git', :branch=>'master'
   gem 'coffee-rails', '~> 3.1.1'
   gem 'uglifier', '>= 1.0.3'
 end
 
+gem 'remotipart'
 gem 'jquery-rails'
 
 # To use ActiveModel has_secure_password
@@ -37,8 +41,8 @@ gem 'jquery-rails'
 group :development, :test do
   # Pretty printed test output
   gem 'turn', '~> 0.8.3', :require => false
-  gem "rspec-rails"
-  gem "tane", :git => "https://github.com/Bushido/tane.git"
-  gem "factory_girl_rails"
-  gem "awesome_print"
+  gem 'rspec-rails'
+  gem 'tane', :git => 'https://github.com/Bushido/tane.git'
+  gem 'factory_girl_rails'
+  gem 'awesome_print'
 end
