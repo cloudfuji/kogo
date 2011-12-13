@@ -41,6 +41,12 @@ class MessagesController < ApplicationController
     end
   end
 
+  def show
+    @channel = Channel.find_by_name params[:channel_id]
+    @message = @channel.messages.find params[:id]
+    render :inline => "<pre><%= @message.content %></pre>", :content_type => 'text/html'
+  end
+  
   # POST /messages
   # POST /messages.json
   def create
