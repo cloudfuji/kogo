@@ -30,7 +30,8 @@ class MessagesController < ApplicationController
       @message_data.push({
           :id => message.id,
           :user => message.user.name,
-          :content => message.escaped_content
+          :content => message.escaped_content,
+          :posted_at => message.created_at.strftime("%I:%M%p")
         })
     end
     

@@ -37,10 +37,11 @@ $ ->
     if messages.length > 0
       for message in messages
         if unprocessedMessage(message)
-          content = message["content"].trim()
-          user    = message["user"]
-          id      = message["id"]
-          command = extractCommand(content)
+          content   = message["content"].trim()
+          user      = message["user"]
+          id        = message["id"]
+          posted_at = message["posted_at"]
+          command   = extractCommand(content)
           #console.log("Is message displayed?")
           #console.log(isMessageDisplayed(id))
           #console.log("command:")
@@ -52,7 +53,7 @@ $ ->
           #console.log("output:")
           #console.log($output)
           output_id = "message_#{ id }"
-          $output ?= window.kogo.messages.defaultMessage(user, content)
+          $output ?= window.kogo.messages.defaultMessage(user, content, posted_at)
           $output.attr('id', output_id)
           #console.log(user)
           #console.log("#{ user } == #{ $.data(document, 'me') }: #{user == $.data(document, 'me')}")

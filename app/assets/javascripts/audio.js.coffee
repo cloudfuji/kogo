@@ -10,10 +10,12 @@ $ ->
   enable = () ->
     _audioPlayer.volume = 1
     audioPlayer.volume = 1
+    $('#audio_toggle').attr('src', '/assets/sound-on.png')
 
   disable = () ->
     _audioPlayer.volume = 0
     audioPlayer.volume = 0
+    $('#audio_toggle').attr('src', '/assets/sound-off.png')
 
   toggle = () ->
     if enabled
