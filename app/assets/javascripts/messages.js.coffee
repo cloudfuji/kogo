@@ -7,7 +7,7 @@ $ ->
     focused = true
     updateLastReadMessageId()
     messageBox().focus()
-    document.title = " #{$.data(document, 'channelId')}").blur(() ->
+    document.title = " #{$(document).data('channelId')}").blur(() ->
       focused = false)
 
   isFocused = () ->
@@ -20,22 +20,19 @@ $ ->
     !($("#message_#{ id }").length == 0)
 
   updateTitle = () ->
-    console.log("wbsite will win!")
     if !focused && unreadMessageCount() != 0
-      console.log("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~")
-      console.log("(#{ unreadMessageCount() }) #{$.data(document, 'channelId')}")
-      document.title = "(#{ unreadMessageCount() }) #{$.data(document, 'channelId')}"
+      document.title = "(#{ unreadMessageCount() }) #{$(document).data('channelId')}"
 
   updateLastReadMessageId = () ->
-    console.log("focused:")
-    console.log(focused)
     if focused
-      $.data(document, 'lastReadMessageId', getLastDisplayedMessageId())
+      $(document).data('lastReadMessageId', getLastDisplayedMessageId())
     else
       updateTitle()
 
   displayMessage = ($element) ->
+    currentScroll = $('body').scrollTop();
     $element.appendTo(".messages")
+    $('body').scrollTop(100000) if ($(document).height() - currentScroll) < 1000
 
   defaultMessage = (user, content, posted_at) ->
     metaString = ""
@@ -49,25 +46,25 @@ $ ->
     $("<div class='message-holder'>#{ metaString #}<div class='message-content'>#{ content #}</div></div>")
 
   lastReadMessageId = () ->
-    parseInt($.data(document, 'lastReadMessageId'))
+    parseInt($(document).data('lastReadMessageId'))
 
   setLastReadMessageId = (id) ->
     #console.log("#{ lastMessageId() } < #{ id }: (#{lastMessageId() < id})")
     if lastReadMessageId() < id
-      $.data document, 'lastReadMessageId', id
+      $(document).data 'lastReadMessageId', id
 
   # This is wrong if the id's are not sequential (i.e. if there are
   # multiple chatrooms going simultaneously)
   unreadMessageCount = () ->
     ldm = parseInt(lastDisplayedMessageElement().attr('id').split('_').slice(1))
     lrm = lastReadMessageId()
-    console.log(ldm)
-    console.log(lrm)
-    console.log(ldm - lrm)
+    # console.log(ldm)
+    # console.log(lrm)
+    # console.log(ldm - lrm)
     ldm - lrm
 
   lastMessageId = ->
-    $.data document, 'lastMessageId'
+    $(document).data 'lastMessageId'
 
   lastDisplayedMessageElement = () ->
     messages = $('.message-holder')
@@ -77,7 +74,7 @@ $ ->
     #console.log("#{ lastMessageId() } < #{ id }: (#{lastMessageId() < id})")
     if lastMessageId() < id
       $('#lastMessageHolder').text(id)
-      $.data document, 'lastMessageId', id
+      $(document).data 'lastMessageId', id
 
   getLastDisplayedMessageId = () ->
     #console.log(lastDisplayedMessageElement())

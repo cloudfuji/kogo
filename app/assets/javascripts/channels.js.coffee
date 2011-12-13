@@ -2,14 +2,14 @@
 $ ->
   #console.log("Loading the channels module")
 
-  window.kogo.users = $.data document, 'users'
+  window.kogo.users = $(document).data 'users'
   window.kogo.users ?= []
 
   window.kogo.channel ?= {}
   window.kogo.channel.updateLock = false
 
   channelId = () ->
-    $.data(document, 'channelId')
+    $(document).data('channelId')
 
   intervalTime = 1000
 
@@ -17,7 +17,7 @@ $ ->
   updateChannel = () ->
     #console.log "updating..."
     #console.log channelId()
-    lastMessageParam = "?last_message_id="+ $.data(document, 'lastMessageId') if $.data(document, 'lastMessageId') != undefined
+    lastMessageParam = "?last_message_id="+ $(document).data('lastMessageId') if $(document).data('lastMessageId') != undefined
     messagesUrl = "/channels/#{ channelId() }/messages.json#{ lastMessageParam }"
     #console.log messagesUrl
     #console.log("updateLocked? #{ window.kogo.channel.updateLock }")
@@ -27,18 +27,25 @@ $ ->
       jQuery.get(messagesUrl, window.kogo.processor.processMessage)
 
   updateUsers = (channel) ->
-    #console.log(channel)
     users = []
-    for user_id, time of channel['users']
-      #console.log(user_id)
-      #console.log(time)
-      users.push(parseInt(user_id))
-    #console.log(users)
+    for user in channel["users"]
+      users.push user
+    $(document).data("users", users)
     window.kogo.users = users
+
+  updateElements = (event, key, users) ->
+    updateUserList(users) if key == "users"
+
+  updateUserList = (users) ->
+    for user in users
+      if $("#user_#{user.id}").length==0
+        $("<div class='user' id='user_#{user.id}'>#{user.first_name} #{user.last_name}</div>").appendTo(".users")
 
   retrieveUsers = () ->
     channelUrl = "/channels/#{ channelId() }.json"
     jQuery.get(channelUrl, updateUsers)
+
+  $(document).bind('changeData', updateElements)
 
   # Adds sets the interval for the updateChannel() function
   # It's being set to the window object so that code on any
@@ -51,3 +58,4 @@ $ ->
     retrieveUsers()
 
   #console.log "finished!"
+  $('body').scrollTop(100000)

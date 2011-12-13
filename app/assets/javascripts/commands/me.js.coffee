@@ -6,7 +6,7 @@ $ ->
     console.log(params)
     console.log(raw)
     console.log(message)
-    i = $.data(document, 'me')
+    i = $(document).data('me')
     console.log(i)
     name = message['user']
     console.log(name)

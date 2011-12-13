@@ -87,7 +87,7 @@ body {
     }
     
     .users {
-      #selected {
+      .selected {
 	font-style: italic;
       }
       .user {
@@ -101,7 +101,7 @@ body {
 
     .rooms {
       margin-bottom: 10px;
-      #selected {
+      .selected {
 	background: $orange;
 	color: #fff;
       }
