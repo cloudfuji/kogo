@@ -20,7 +20,7 @@ class Channel < ActiveRecord::Base
   # processing
   def add_user(user)
     unless user_in_room?(user)
-      users[user.id] = Time.now
+      users[user.id] = [Time.now, user.name]
       save
 
       announce("#{ user.name } has entered the channel")
