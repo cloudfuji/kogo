@@ -53,8 +53,9 @@ $ ->
   # Useful for testing it out during development
   if channelId() != undefined
     #console.log("Checking for new messages every #{ intervalTime }ms")
-    window.channelUpdateInterval = setInterval(updateChannel, 100000)#intervalTime)
-    window.userUpdateInterval    = setInterval(retrieveUsers, 2000)
+    window.channelUpdateInterval = setInterval(updateChannel, intervalTime)
+    window.userUpdateInterval    = setInterval(retrieveUsers, 30000)
     retrieveUsers()
 
   #console.log "finished!"
+  $('body').scrollTop(100000)

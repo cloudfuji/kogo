@@ -20,22 +20,19 @@ $ ->
     !($("#message_#{ id }").length == 0)
 
   updateTitle = () ->
-    console.log("wbsite will win!")
     if !focused && unreadMessageCount() != 0
-      console.log("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~")
-      console.log("(#{ unreadMessageCount() }) #{$(document).data('channelId')}")
       document.title = "(#{ unreadMessageCount() }) #{$(document).data('channelId')}"
 
   updateLastReadMessageId = () ->
-    console.log("focused:")
-    console.log(focused)
     if focused
       $(document).data('lastReadMessageId', getLastDisplayedMessageId())
     else
       updateTitle()
 
   displayMessage = ($element) ->
+    currentScroll = $('body').scrollTop();
     $element.appendTo(".messages")
+    $('body').scrollTop(100000) if ($(document).height() - currentScroll) < 1000
 
   defaultMessage = (user, content, posted_at) ->
     metaString = ""
@@ -61,9 +58,9 @@ $ ->
   unreadMessageCount = () ->
     ldm = parseInt(lastDisplayedMessageElement().attr('id').split('_').slice(1))
     lrm = lastReadMessageId()
-    console.log(ldm)
-    console.log(lrm)
-    console.log(ldm - lrm)
+    # console.log(ldm)
+    # console.log(lrm)
+    # console.log(ldm - lrm)
     ldm - lrm
 
   lastMessageId = ->
