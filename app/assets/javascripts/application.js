@@ -5,5 +5,11 @@
 // the compiled file.
 //
 //= require jquery
-//= require jquery_ujs
-//= require_tree
+//= require jquery-ui-1.8.12.custom/js/jquery-ui-1.8.12.custom.min.js
+
+//= require_directory ./commands
+//= require_directory ./widgets
+
+
+/* initial scripts */
+//- require_directory ./alpha

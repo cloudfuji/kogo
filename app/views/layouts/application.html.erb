@@ -3,7 +3,7 @@
 <head>
   <title><%= " #{@title}" || " Kogo" %></title>
   <%= stylesheet_link_tag    "application" %>
-  <%= javascript_include_tag "application" %>
+
   <%= csrf_meta_tags %>
 
   <%= yield :header %>
@@ -35,11 +35,13 @@
   <div class="footer">
     <%= yield :footer %>
   </div>
-
-  <% if user_signed_in? %>
+  <%= javascript_include_tag "application" %>
+ 
+ <% if user_signed_in? %>
     <script type="text/javascript">
       (function() { $.data(document, 'me', '<%= current_user.name %>'); })();
     </script>
   <% end %>
+  
 </body>
 </html>
