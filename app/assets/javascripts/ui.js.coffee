@@ -6,7 +6,7 @@ $ ->
   $form = $('#new_message')
 
   channelId = () ->
-    $.data(document, 'channelId')
+    $(document).data('channelId')
 
   formToData = () ->
     data = {}

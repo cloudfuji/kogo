@@ -28,6 +28,8 @@ class ChannelsController < ApplicationController
     @channel.users.each do |user|
       @users << User.find(user.first)
     end
+
+    @channel.users = @users
     
     respond_to do |format|
       format.html # show.html.erb
