@@ -10,8 +10,10 @@ class BushidoEmailHooks < Bushido::EventObserver
     user    = User.find_by_email(params['from_email'])
     user  ||= User.find_by_email(params['mail']['sender'])
 
+    puts params.inspect
+    
     if user
-      if not params['attachments'].empty?
+      if params['attachments'] and !params['attachments'].empty?
         params['attachments'].each do |email_attachment|
           attachment = Attachment.new
           attachment.user = user
