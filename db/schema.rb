@@ -36,7 +36,6 @@ ActiveRecord::Schema.define(:version => 20111213031006) do
     t.text     "content"
     t.integer  "user_id"
     t.integer  "channel_id"
-    t.integer  "to_user"
     t.datetime "created_at"
     t.datetime "updated_at"
   end

@@ -39,7 +39,7 @@ $ ->
   updateUserList = (users) ->
     for user in users
       if $("#user_#{user.id}").length==0
-        $("<div class='user' id='#{user.id}'>#{user.first_name} #{user.last_name}</div>").appendTo(".users")
+        $("<div class='user' id='user_#{user.id}'>#{user.first_name} #{user.last_name}</div>").appendTo(".users")
 
   retrieveUsers = () ->
     channelUrl = "/channels/#{ channelId() }.json"
