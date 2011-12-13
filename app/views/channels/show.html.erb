@@ -56,7 +56,7 @@
   <div class="users_title">Users Online</div>
   <div class="users">
     <%- @users.each do |user| %>
-      <div class="user">
+      <div class="user" <%= "id='selected'" if user.id == current_user.id %>>
         <%= "#{user.first_name} #{user.last_name}" %>
       </div>
     <%- end %>
