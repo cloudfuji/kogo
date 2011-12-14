@@ -30,9 +30,13 @@ $ ->
       updateTitle()
 
   displayMessage = ($element) ->
-    currentScroll = $('body').scrollTop();
+    currentPosition = $('body').scrollTop();
+    totalHeight = $(document).height() - $(window).height()
+    scrollPercentage = (currentPosition) / (totalHeight)
     $element.appendTo(".messages")
-    $('body').scrollTop(100000) if ($(document).height() - currentScroll) < 1000
+    autoScrollThreshold = 0.95
+    $('body').scrollTop(100000) if scrollPercentage > autoScrollThreshold
+
 
   defaultMessage = (user, content, posted_at) ->
     metaString = ""
