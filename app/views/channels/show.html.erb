@@ -74,7 +74,6 @@
     $(document).data('channelId',         <%= "'#{@channel.to_param}\'" %>)
     $(document).data('lastMessageId',     <%= "#{@messages.try(:last).try(:id) || 0}" %>)
     $(document).data('lastReadMessageId', <%= "#{@messages.try(:last).try(:id) || 0}"  %>)
-    $(document).data('users',             <%= raw(@channel.users.to_json) || [] %>)
   </script>
 
 <%-end %>

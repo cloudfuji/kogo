@@ -1,18 +1,19 @@
 users_list =
-  options: {
+  options:
     intervalTime: 15000
-    channelId: 'Shiro'
     users: []
     $titleBar: $('users_title')
     userTemplate: $.template('userTemplate', "<div class='users_list_user' id='user_${id}'>${name}</div>")
-  }
 
   _create: ->
     userUpdateInterval = setInterval($.proxy(@retrieveUsersFromServer, this), @options.intervalTime)
     @retrieveUsersFromServer()
 
+  channelId: ->
+    $(document).data('channelId')
+
   retrieveUsersFromServer: ->
-    channelUrl = "/channels/#{ @options.channelId }.json"
+    channelUrl = "/channels/#{ @channelId() }.json"
     $.get(channelUrl, $.proxy(@updateUsers, this))
 
   updateUsers:(channel) ->
@@ -22,12 +23,12 @@ users_list =
     @updateDisplay(channel['users'])
 
   updateDisplay: (users)->
-    for user of users
-      _user = {}
-      _user.id = parseInt(user)
-      _user.lastHeartBeat = users[user][0]
-      _user.name = users[user][1]
-      @addUserToDisplay(_user)
+    for userId of users
+      user               = {}
+      user.id            = parseInt(userId)
+      user.lastHeartBeat = users[userId][0]
+      user.name          = users[userId][1]
+      @addUserToDisplay(user)
 
     # Now remove users that are displayed but are not in this list. Is
     # it in the displayedList but not the updated userlist from the
