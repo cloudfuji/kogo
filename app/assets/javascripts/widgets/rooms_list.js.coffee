@@ -1,6 +1,6 @@
 channels_list =
   options:
-    intervalTime    : 1500
+    intervalTime    : 15000
     channels        : []
     $titleBar       : $('users_title')
     channelTemplate : $.template('channelTemplate', '<div id="channels_${channel.name}" class="channels_list_channel ${selected}">${channel.name} (<span id="channel_${channel.name}_user_count">${channel.user_count}</span>)</div>')
