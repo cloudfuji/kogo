@@ -30,7 +30,7 @@
   <% end %>
 
   <ul id="file_list">
-    <% @channel.attachments.limit(5).reverse.each do |attachment| %>
+    <% @channel.attachments.order("created_at DESC").limit(15).each do |attachment| %>
     <li><a href="<%= attachment.file.url %>"><%= attachment.file_file_name and attachment.file_file_name.truncate(15) %></a></li>
     <% end %>
   </ul>
