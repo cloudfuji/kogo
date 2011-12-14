@@ -3,7 +3,7 @@ channels_list =
     intervalTime    : 15000
     channels        : []
     $titleBar       : $('users_title')
-    channelTemplate : $.template('channelTemplate', '<div id="channels_${channel.name}" class="channels_list_channel ${selected}">${channel.name} (<span id="channel_${channel.name}_user_count">${channel.user_count}</span>)</div>')
+    channelTemplate : $.template('channelTemplate', '<div id="channels_${channel.name}" class="channels_list_channel ${selected}"><a href="/channels/${channel.name}">${channel.name} (<span id="channel_${channel.name}_user_count">${channel.user_count}</span>)</a></div>')
 
   _create: ->
     userUpdateInterval = setInterval($.proxy(@retrieveChannelsFromServer, this), @options.intervalTime)
