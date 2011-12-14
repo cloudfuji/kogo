@@ -14,7 +14,7 @@ channel =
     $(document).bind(@namespace+'.updateChannel', @updateChannel);
 
   updateChannel: ->
-    lastMessageParam = "?last_message_id="+ $.data(document, 'lastMessageId') if $.data(document, 'lastMessageId') != undefined
+    lastMessageParam = "?last_message_id="+ $(document).data('lastMessageId') if $(document).data('lastMessageId') != undefined
     messagesUrl = "/channels/#{ channelId() }/messages.json#{ lastMessageParam }"
     if not window.kogo.channel.updateLock
       window.kogo.channel.updateLock = true

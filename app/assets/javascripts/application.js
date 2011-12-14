@@ -8,6 +8,7 @@
 //= require jquery_ujs
 //= require jquery.remotipart
 //= require jquery-ui-1.8.12.custom/js/jquery-ui-1.8.12.custom.min.js
+//= require vendor/jquery-tmpl/jquery.tmpl.js
 
 //- require_directory ./commands
 //= require_directory ./widgets

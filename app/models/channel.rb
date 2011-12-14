@@ -5,6 +5,7 @@ class Channel < ActiveRecord::Base
   serialize :users, Hash
 
   after_create Proc.new { |channel| channel.instantiate_mail_route! }
+  before_validation Proc.new { |channel| channel.users ||= {} }
 
   def to_param
     name

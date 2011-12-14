@@ -30,7 +30,7 @@
   <% end %>
 
   <ul id="file_list">
-    <% @channel.attachments.limit(5).reverse.each do |attachment| %>
+    <% @channel.attachments.order("created_at DESC").limit(15).each do |attachment| %>
     <li><a href="<%= attachment.file.url %>"><%= attachment.file_file_name and attachment.file_file_name.truncate(15) %></a></li>
     <% end %>
   </ul>
@@ -45,7 +45,7 @@
   </div>
 
   <div class="users_title">Users Online</div>
-  <div class="users">
+  <div class="users_list">
     <%- @users.each do |user| %>
       <%- if user[:id] == current_user.id %>
         <div class="user selected" id="<%= "user_#{user[:id]}"%>">
@@ -71,10 +71,10 @@
   </div>
 
   <script language="javascript">
-    $.data(document, 'channelId',         <%= "'#{@channel.to_param}\'" %>)
-    $.data(document, 'lastMessageId',     <%= "#{@messages.try(:last).try(:id) || 0}" %>)
-    $.data(document, 'lastReadMessageId', <%= "#{@messages.try(:last).try(:id) || 0}"  %>)
-    $.data(document, 'users',             <%= "#{@channel.users.keys           || []}" %>)
+    $(document).data('channelId',         <%= "'#{@channel.to_param}\'" %>)
+    $(document).data('lastMessageId',     <%= "#{@messages.try(:last).try(:id) || 0}" %>)
+    $(document).data('lastReadMessageId', <%= "#{@messages.try(:last).try(:id) || 0}"  %>)
+    $(document).data('users',             <%= raw(@channel.users.to_json) || [] %>)
   </script>
 
 <%-end %>
