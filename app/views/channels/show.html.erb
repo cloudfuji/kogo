@@ -1,18 +1,18 @@
 <div class="messages">
   <%- @messages.each do |message| %>
-    <div id="message_<%= message.id %>" class="message-holder <%= 'me' if current_user == message.user %>">
-      <div class="message-meta">
-        <span class="message-author">
-          <%= "#{message.user.name}" %>
-	</span>
-        <span class="message-time">
-          <%= "at #{message.created_at.strftime("%I:%M%p") }" %>
-	</span>
-	<div class = "message-content">
-          <%= message.content %>
-	</div>
-      </div>
+  <div id="message_<%= message.id %>" class="message-holder <%= 'me' if current_user == message.user %>">
+    <div class="message-meta">
+      <span class="message-author">
+        <%= "#{message.user.name}" %>
+	    </span>
+      <span class="message-time">
+        <%= "at #{message.created_at.strftime("%I:%M%p") }" %>
+	    </span>
+	    <div class = "message-content">
+        <%= message.content %>
+	    </div>
     </div>
+  </div>
   <%- end %>
 </div>
 
@@ -24,9 +24,9 @@
 
   <div class="rooms_title">Files</div>
   <%= form_tag("/channels/#{@channel.to_param}/attachments.js", :remote => true, :id => "file_upload", :html => { :multipart => true }) do |form| %>
-    <%= hidden_field :channel_id, @channel.id %>
-    <%= file_field_tag 'file' %>
-    <%= submit_tag 'Upload' %>
+  <%= hidden_field :channel_id, @channel.id %>
+  <%= file_field_tag 'file' %>
+  <%= submit_tag 'Upload' %>
   <% end %>
 
   <ul id="file_list">
@@ -36,33 +36,28 @@
   </ul>
 
   <div class="rooms_title">Rooms</div>
-  <div class="rooms">
-    <%- @channels.each do |channel| %>
-      <div class="room <%= "selected" if channel.id == @channel.id %>">
-	<%= "#{channel.name} (#{channel.users.count})" %>
-      </div>
-    <%- end %>
+  <div class="rooms_list">
   </div>
 
   <div class="users_title">Users Online</div>
   <div class="users_list">
     <%- @users.each do |user| %>
-      <%- if user[:id] == current_user.id %>
-        <div class="user selected" id="<%= "user_#{user[:id]}"%>">
+    <%- if user[:id] == current_user.id %>
+    <div class="user selected" id="<%= "user_#{user[:id]}"%>">
       <%- else %>
-        <div class="user">
-      <%-end %>
+      <div class="user">
+        <%-end %>
         <%= "#{user[:first_name]} #{user[:last_name]}" %>
       </div>
-    <%- end %>
+      <%- end %>
+    </div>
   </div>
-</div>
 
-<%- content_for :footer do %>
+  <%- content_for :footer do %>
   <div class="chatbox">
     <%= form_for([@channel, @message], :remote => true) do |f| %>
-      <%= f.hidden_field :channel_id, :value =>  @message.channel_id %>
-      <%=f.text_area :content, :rows => 20 %>
+    <%= f.hidden_field :channel_id, :value =>  @message.channel_id %>
+    <%=f.text_area :content, :rows => 20 %>
     <%- end %>
   </div>
 
@@ -76,4 +71,4 @@
     $(document).data('lastReadMessageId', <%= "#{@messages.try(:last).try(:id) || 0}"  %>)
   </script>
 
-<%-end %>
+  <%-end %>
