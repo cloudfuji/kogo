@@ -4,16 +4,13 @@ chatbox =
  }
 
  _create: ->
-   $ele = @element
-   self = this
-   $form = $ele.find 'form'
-   $message_content =  $ele.find '#message_content'
+   $form = @element.find('form')
+   $message_content =  @element.find('#message_content')
+   $message_content.keypress $.proxy(@sendMessage, this)
 
-   $message_content.keypress $.proxy(self.sendMessage, self)
-
-   $ele.data('$form', $form)
-   $ele.data('$message_channel_id', $ele.find('#message_channel_id'))
-   $ele.data('$message_content', $ele.find('#message_content'))
+   @element.data('$form', $form)
+   @element.data('$message_channel_id', @element.find('#message_channel_id'))
+   @element.data('$message_content', @element.find('#message_content'))
 
  formToData: () ->
    data = {}
@@ -23,15 +20,13 @@ chatbox =
    data
 
  sendMessage: (event) ->
-   self = this
-   $ele = @element
    channelId = $(document).data('channelId')
    if event.which == 13
-     data = self.formToData()
+     data = @formToData()
      target = "/channels/#{ channelId }/messages.json"
      $.post(target, data)
-     $ele.data('$message_content').val("")
-     $ele.data('$message_content').focus()
+     @element.data('$message_content').val("")
+     @element.data('$message_content').focus()
      event.preventDefault()
      event.stopPropagation()
      false
