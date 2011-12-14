@@ -3,11 +3,10 @@
 <head>
   <title><%= " #{@title}" || " Kogo" %></title>
   <%= stylesheet_link_tag    "application" %>
-  <%= javascript_include_tag "application" %>
+
   <%= csrf_meta_tags %>
 
   <%= yield :header %>
-
 </head>
 <body>
   <audio class="audio_private"></audio>
@@ -31,15 +30,17 @@
     <%= yield %>
     <div class="container_footer"></div>
   </div>
+  <%= javascript_include_tag "application" %>
 
   <div class="footer">
     <%= yield :footer %>
   </div>
-
-  <% if user_signed_in? %>
+ 
+ <% if user_signed_in? %>
     <script type="text/javascript">
       (function() { $.data(document, 'me', '<%= current_user.name %>'); })();
     </script>
   <% end %>
+  
 </body>
 </html>

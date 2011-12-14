@@ -7,4 +7,12 @@
 //= require jquery
 //= require jquery_ujs
 //= require jquery.remotipart
-//= require_tree
+//= require jquery-ui-1.8.12.custom/js/jquery-ui-1.8.12.custom.min.js
+
+//- require_directory ./commands
+//= require_directory ./widgets
+//= require kogo
+
+/* initial scripts */
+//- require_directory ./alpha
+
