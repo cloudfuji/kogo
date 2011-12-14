@@ -63,7 +63,6 @@ $ ->
           $output.addClass('announcement') if user == "kogo bot"
           $output.addClass('message-holder')
           window.kogo.messages.displayMessage($output) if not window.kogo.messages.isMessageDisplayed(id)
-          $.data($("#{ output_id }", 'user', user))
       window.kogo.messages.setLastMessageId(window.kogo.messages.getLastDisplayedMessageId())
     # Unlock the updater
     #console.log("finished updating, unlocking")
