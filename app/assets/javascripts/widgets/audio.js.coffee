@@ -1,25 +1,35 @@
 audio =
   options: {
     enabled: true
+    volume: 0
     toggle_element: $('#audio_toggle')
+    private_channel: $('.audio_private')
+    shared_channel: $('.audio_common')
+    # localFileUrl: (fileName) ->
+    #   return "http://#{ window.location.hostname }:#{ window.location.port }/sounds/#{ fileName }"
+    # localSounds:
+    #   "gobushido": @localFileUrl("hey.mp3")
+    #   "claps"    : @localFileUrl("cheer.mp3")
+    #   "kolaveri" : @localFileUrl("kolaveri.mp3")
+    #   "ding"     : @localFileUrl("ding.mp3")
   }
 
   _create: ->
-    $ele = @element
-    self = this
+    @options.toggle_element.click($.proxy(this.toggle, this))
 
-    @option.toggle_element.click(@toggle) -> #this should be teased out
-
+    $(document).bind("#{@namespace}.play", @play)
+    $(document).bind("#{@namespace}.pause", @pause)
 
   enable: ->
-    _audioPlayer.volume = 1
-    audioPlayer.volume = 1
-    @option.toggle_element.attr('src', '/assets/sound-on.png')
+    @setVolume 0
+    @options.toggle_element.attr('src', '/assets/sound-on.png')
 
   disable: ->
-    _audioPlayer.volume = 0
-    audioPlayer.volume = 0
-    @option.toggle_element.attr('src', '/assets/sound-off.png')
+    @setVolume 0
+    @options.toggle_element.attr('src', '/assets/sound-off.png')
+
+  setVolume: (volume) ->
+    @element.volume = volume
 
   toggle: ->
     if @option('enabled')
@@ -32,7 +42,9 @@ audio =
   setAudioUrl: (url) ->
     @element.setAttribute('src', url)
 
-  play: ->
+  play: (url) ->
+    if url
+      @setAudoUrl url
     if @enabled()
       @element.play()
 
@@ -40,7 +52,7 @@ audio =
     @element.pause()
 
   ding: ->
-    _audioPlayer.setAttribute('src', "http://#{ window.location.hostname }:#{ window.location.port }/sounds/ding.wav")
-    _audioPlayer.play()
+    @setAttribute('src', "http://#{ window.location.hostname }:#{ window.location.port }/sounds/ding.wav")
+    @play()
 
 $.widget "kogo.audio", audio
