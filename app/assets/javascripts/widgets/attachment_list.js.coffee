@@ -1,6 +1,6 @@
 attachments_list =
   options:
-    intervalTime       : 3000
+    intervalTime       : 60000
     attachments        : []
     $titleBar          : $('#file_list_title')
     attachmentTemplate : $.template('attachmentTemplate', '<li id="attachments_${attachment.id}" class="attachments_list_attachment"><a target="_blank" href="${attachment.url}">${attachment.file_file_name}</a></li>')

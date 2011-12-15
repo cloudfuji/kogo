@@ -42,19 +42,20 @@ class Channel < ActiveRecord::Base
 
   def touch_user(user)
     add_user(user) unless user_in_room?(user)
-    users[user.id] = Time.now
+    users[user.id] = [Time.now, user.name]
     save
   end
 
   def update_users!
+    puts users.inspect
+
     users.keys.each do |user_id|
-      remove_user(User.find(user_id)) if (users[user_id] < 2.minutes.ago)
+      remove_user(User.find(user_id)) if (users[user_id].first < 2.minutes.ago)
     end
   end
 
   def instantiate_mail_route!
     ::Bushido::Mailroute.map do |m|
-
       m.route("mail.new_message") do
         m.subject("{:channel_name}", :channel_name => self.name)
       end
