@@ -44,5 +44,6 @@ group :development, :test do
   gem 'rspec-rails'
   gem 'tane', :git => 'https://github.com/Bushido/tane.git'
   gem 'factory_girl_rails'
+  gem 'jasmine', :git => "https://github.com/pivotal/jasmine-gem.git", :branch => "1.2.rc1"
   gem 'awesome_print'
 end
