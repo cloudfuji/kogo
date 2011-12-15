@@ -1,58 +1,61 @@
 audio =
-  options: {
-    enabled: true
-    volume: 0
-    toggle_element: $('#audio_toggle')
-    private_channel: $('.audio_private')
-    shared_channel: $('.audio_common')
-    # localFileUrl: (fileName) ->
-    #   return "http://#{ window.location.hostname }:#{ window.location.port }/sounds/#{ fileName }"
-    # localSounds:
-    #   "gobushido": @localFileUrl("hey.mp3")
-    #   "claps"    : @localFileUrl("cheer.mp3")
-    #   "kolaveri" : @localFileUrl("kolaveri.mp3")
-    #   "ding"     : @localFileUrl("ding.mp3")
-  }
+  options:
+    volume         : 0
+    localSounds    : {}
+    toggleElement  : $('#audio_toggle')
+    sharedChannel  : $('.audio_common')[0]
+    privateChannel : $('.audio_private')[0]
 
   _create: ->
-    @options.toggle_element.click($.proxy(this.toggle, this))
+    @options.toggleElement.click($.proxy(this.toggle, this))
 
-    $(document).bind("#{@namespace}.play", @play)
-    $(document).bind("#{@namespace}.pause", @pause)
+    $(document).bind("#{ @namespace }.play", @play)
+    $(document).bind("#{ @namespace }.pause", @pause)
+
+  _init: ->
+    @options.enabled = true
+
+    localSounds =
+      "gobushido": @localFileUrl("hey.mp3")
+      "claps"    : @localFileUrl("cheer.mp3")
+      "kolaveri" : @localFileUrl("kolaveri.mp3")
+      "ding"     : @localFileUrl("ding.mp3")
 
   enable: ->
-    @setVolume 0
-    @options.toggle_element.attr('src', '/assets/sound-on.png')
+    @setVolume 1
+    @options.toggleElement.attr('src', '/assets/sound-on.png')
 
   disable: ->
     @setVolume 0
-    @options.toggle_element.attr('src', '/assets/sound-off.png')
+    @options.toggleElement.attr('src', '/assets/sound-off.png')
 
   setVolume: (volume) ->
-    @element.volume = volume
+    @options.sharedChannel.volume = volume
+    @options.privateChannel.volume = volume
 
   toggle: ->
-    if @option('enabled')
+    if @options.enabled
+      @options.enabled = false
       @disable()
-      @option('enabled',false)
     else
+      @options.enabled = true
       @enable()
-      @option('enabled', true)
 
   setAudioUrl: (url) ->
-    @element.setAttribute('src', url)
+    @options.sharedChannel.setAttribute('src', url)
 
   play: (url) ->
-    if url
-      @setAudoUrl url
-    if @enabled()
-      @element.play()
+    @options.sharedChannel.setAudoUrl(url)
+    @options.sharedChannel.play()
 
   pause: ->
-    @element.pause()
+    @options.sharedChannel.pause()
+
+  localFileUrl: (fileName) ->
+    return "http://#{ window.location.hostname }:#{ window.location.port }/sounds/#{ fileName }"
 
   ding: ->
-    @setAttribute('src', "http://#{ window.location.hostname }:#{ window.location.port }/sounds/ding.wav")
-    @play()
+    @options.privateChannel.setAttribute('src', "http://#{ window.location.hostname }:#{ window.location.port }/sounds/ding.wav")
+    @options.privateChannel.play()
 
 $.widget "kogo.audio", audio
