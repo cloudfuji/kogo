@@ -14,3 +14,19 @@ if (typeof String.prototype.truncate == undefined) {
     }
   };
 }
+
+// Look into this later. The output has to match ruby's CGI.escape_html output.
+  String.prototype.htmlEncode = function () {
+    var i = this.length,
+    aRet = [];
+
+    while (i--) {
+      var iC = this[i].charCodeAt();
+      if (iC < 65 || iC > 127 || (iC>90 && iC<97)) {
+        aRet[i] = '&#'+iC+';';
+      } else {
+        aRet[i] = this[i];
+      }
+    }
+    return aRet.join('');    
+  }

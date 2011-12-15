@@ -1,9 +1,11 @@
 chat_history =
   options:
     updateLocked           : false
+    focused                : true
     intervalTime           : 3000
     autoScrollThreshold    : 0.95
     oldMessageLimit        : 50
+    unreadMessageCount     : 0
     latestMessageDisplayed : 0
     messageHolderTemplate  : $.template('messageHolderTemplate' , '<div class="message-holder ${ me }" id="message_${ message.id }"></div>' )
     messageMetaTemplate    : $.template('messageMetaTemplate'   , '<div class="message-meta"></div>'                                        )
@@ -19,8 +21,18 @@ chat_history =
     if @channelId() != undefined
       chatHistoryUpdateInterval = setInterval($.proxy(@updateChannel, this), @options.intervalTime)
       @updateChannel()
+      $(document).bind('#{ @namespace }.newMessage', $.proxy(@updateTitle, this))
+      $(document).bind("#{ @namespace }.chatHistoryUpdate", @updateChannel);
+      $(window).focus($.proxy(@setFocused, this)).blur($.proxy(@setUnfocused, this))
 
-    $(document).bind(@namespace+'.chatHistoryUpdate', @updateChannel);
+
+  setFocused: ->
+    @options.unreadMessageCount = 0
+    document.title = "#{ @channelId() }"
+    @options.focused = true
+
+  setUnfocused: ->
+    @options.focused = false
 
   channelId: ->
     $(document).data('channelId')
@@ -40,6 +52,10 @@ chat_history =
     if not @options.updateLock
       @options.updateLock = true
       jQuery.get(@updateMessagesUrl(), $.proxy(@processMessages, this))
+
+  updateTitle: ->
+    if !@options.focused && @options.unreadMessageCount > 0
+      document.title = "(#{ @options.unreadMessageCount }) #{ @channelId() }"
 
   compareMessageIds: (x, y) ->
     x.id - y.id
@@ -136,8 +152,12 @@ chat_history =
           if !@checkForPendingMessage(message)
             @addMessageToDisplay(message)
             notifyNewMessage = true
+            @options.unreadMessageCount += 1 if !@options.focused
 
     @updateLatestDisplayedMessage()
+    # It would be nicer if this were simply attached to the #{
+    # @namespace }.newMessage event
+    @updateTitle()
 
     if triggerScroll
       @removeOldMessages()
