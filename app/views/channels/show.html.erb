@@ -23,11 +23,7 @@
   </div>
 
   <div id='file_list_title' class="rooms_title">Files</div>
-  <%= form_tag("/channels/#{@channel.to_param}/attachments.js", :remote => true, :id => "file_upload", :html => { :multipart => true }) do |form| %>
-  <%= hidden_field :channel_id, @channel.id %>
-  <%= file_field_tag 'file' %>
-  <%= submit_tag 'Upload' %>
-  <% end %>
+  <div class='file_upload_holder'></div>
 
   <div id="files_list_holder">
     <ul class="files_list"></ul>
