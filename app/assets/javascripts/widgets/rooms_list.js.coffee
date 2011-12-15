@@ -40,7 +40,7 @@ channels_list =
     if !@isChannelDisplayed(channel)
       _channel = {}
       _channel.name = channel.name
-      # Object.keys() isn't supported on IE (or any non ES5-js env)
+      # Object.keys() isn't supported on IE8- (or any non ES5-js env)
       _channel.user_count = @userCount(channel)
       $.tmpl(@options.channelTemplate, { channel: _channel }).data('name', channel.name).appendTo(@element)
 

@@ -2,12 +2,13 @@ chat_history =
   options:
     updateLocked           : false
     intervalTime           : 3000
+    autoScrollThreshold    : 0.95
     latestMessageDisplayed : 0
-    messageHolderTemplate  : $.template('messageHolderTemplate',  '<div class="message-holder ${ me }" id="message_${ message.id }"></div>')
-    messageMetaTemplate    : $.template('messageMetaTemplate',    '<div class="message-meta"></div>')
-    messageAuthorTemplate  : $.template('messageAuthorTemplate',  '<span class="message-author">${ message.user }</span> ')
-    messageTimeTemplate    : $.template('messageTimeTemplate',    '<span class="message-time">at ${ message.posted_at }</span> ')
-    messageContentTemplate : $.template('messageContentTemplate', '<div class="message-content">${ message.content }</div></div>')
+    messageHolderTemplate  : $.template('messageHolderTemplate' , '<div class="message-holder ${ me }" id="message_${ message.id }"></div>' )
+    messageMetaTemplate    : $.template('messageMetaTemplate'   , '<div class="message-meta"></div>'                                        )
+    messageAuthorTemplate  : $.template('messageAuthorTemplate' , '<span class="message-author">${ message.user } </span> '                 )
+    messageTimeTemplate    : $.template('messageTimeTemplate'   , '<span class="message-time">at ${ message.posted_at } </span> '           )
+    messageContentTemplate : $.template('messageContentTemplate', '<div class="message-content">${ message.content }</div></div>'           )
 
   _create: ->
     # Adds sets the interval for the updateChannel() function
@@ -52,17 +53,21 @@ chat_history =
     $content = $.tmpl('messageContentTemplate', { message: message         })
     $holder.append($meta.append($author).append($time)).append($content)
 
-  scrollToLatestMessage: ->
+  pastAutoScrollThreshold: ->
     currentPosition     = $('body').scrollTop();
     totalHeight         = $(document).height() - $(window).height()
     scrollPercentage    = (currentPosition) / (totalHeight)
-    autoScrollThreshold = 0.95
-    $('body').scrollTop(100000) if scrollPercentage > autoScrollThreshold
+    scrollPercentage > @options.autoScrollThreshold
+
+  scrollToLatestMessage: ->
+    $('body').scrollTop(100000)
 
   messagesInDisplay: ->
     _messages = []
     $('.message-holder').each((index, element) ->
-      _messages.push(parseInt($(element).attr('id').split("_")[1])))
+      _id = parseInt($(element).attr('id').split("_")[1])
+      _id = 0 if isNaN(_id)
+      _messages.push(_id))
     _messages.sort()
 
   isMessageDisplayed: (message) ->
@@ -70,27 +75,58 @@ chat_history =
 
   updateLatestDisplayedMessage: ->
     messages = @messagesInDisplay()
-    console.log(messages)
-    console.log("latestMessageDisplayed: ", messages[messages.length - 1])
     @options.latestMessageDisplayed = messages[messages.length - 1]
+
+  addPendingMessageToDisplay: (message) ->
+    _message           = {}
+    _message.id        = "pending"
+    _message.content   = message.content
+    _message.posted_at = "just now"
+    _message.user      = @currentUser()
+    @addMessageToDisplay(_message)
+    @scrollToLatestMessage() if @pastAutoScrollThreshold()
+
+  addMessageToDisplay: (message) ->
+    $output = @defaultMessageTemplate(message)
+    @addRawOutputToDisplay($output)
+
+  addRawOutputToDisplay: ($output) ->
+    $output.appendTo(@element)
+
+  checkForPendingMessage: (message) ->
+    found = false
+    $('.message-holder').each((index, element) ->
+      $element = $(element)
+      _id = $element.attr('id').split("_")[1]
+      if _id == "pending"
+        if $element.children('.message-content').text() == message.content
+          $element.attr('id', "message_#{ message.id }")
+          $element.children('.message-meta').children('.message-time').text("at #{ message.posted_at }")
+          found = true)
+
+    return found
 
   processMessages: (messages) ->
     notifyNewMessage = false
+    triggerScroll = @pastAutoScrollThreshold()
+
     if messages.length > 0
       for message in messages.sort(@compareMessageIds)
         if !@isMessageDisplayed(message)
+          notifyNewMessage = true
+
           _message           = {}
           _message.id        = message.id
           _message.content   = message.content
           _message.posted_at = message.posted_at
           _message.user      = message.user
 
-          $output = @defaultMessageTemplate(message)
+          if !@checkForPendingMessage(message)
+            @addMessageToDisplay(message)
+            notifyNewMessage = true
 
-          # $output = $.tmpl(@options.messageDefaultTemplate, { message: _message })
-          $output.appendTo(@element)
     @updateLatestDisplayedMessage()
-    @scrollToLatestMessage()
+    @scrollToLatestMessage() if triggerScroll
     @options.updateLock = false
 
 $.widget "kogo.chat_history", chat_history
