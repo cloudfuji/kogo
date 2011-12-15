@@ -3,6 +3,7 @@ chat_history =
     updateLocked           : false
     intervalTime           : 3000
     autoScrollThreshold    : 0.95
+    oldMessageLimit        : 50
     latestMessageDisplayed : 0
     messageHolderTemplate  : $.template('messageHolderTemplate' , '<div class="message-holder ${ me }" id="message_${ message.id }"></div>' )
     messageMetaTemplate    : $.template('messageMetaTemplate'   , '<div class="message-meta"></div>'                                        )
@@ -77,6 +78,20 @@ chat_history =
     messages = @messagesInDisplay()
     @options.latestMessageDisplayed = messages[messages.length - 1]
 
+  removeOldMessages: ->
+    messageIds  = @messagesInDisplay().sort()
+    countToCull = (@options.oldMessageLimit - messageIds.length) * -1
+    if countToCull > 0
+      cullableMessageIds = messageIds.slice(0, countToCull)
+      @removeMessages(cullableMessageIds)
+
+  removeMessage: (messageId) ->
+    $("#message_#{ messageId }").remove()
+
+  removeMessages: (messageIds) ->
+    for messageId in messageIds
+      @removeMessage(messageId)
+
   addPendingMessageToDisplay: (message) ->
     _message           = {}
     _message.id        = "pending"
@@ -125,7 +140,11 @@ chat_history =
             notifyNewMessage = true
 
     @updateLatestDisplayedMessage()
-    @scrollToLatestMessage() if triggerScroll
+
+    if triggerScroll
+      @removeOldMessages()
+      @scrollToLatestMessage()
+
     @options.updateLock = false
 
 $.widget "kogo.chat_history", chat_history
