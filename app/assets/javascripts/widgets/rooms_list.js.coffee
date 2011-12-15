@@ -6,7 +6,7 @@ channels_list =
     channelTemplate : $.template('channelTemplate', '<div id="channels_${channel.name}" class="channels_list_channel ${selected}"><a href="/channels/${channel.name}">${channel.name} (<span id="channel_${channel.name}_user_count">${channel.user_count}</span>)</a></div>')
 
   _create: ->
-    userUpdateInterval = setInterval($.proxy(@retrieveChannelsFromServer, this), @options.intervalTime)
+    channelUpdateInterval = setInterval($.proxy(@retrieveChannelsFromServer, this), @options.intervalTime)
     @retrieveChannelsFromServer()
 
   userCount: (channel) ->
