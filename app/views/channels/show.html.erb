@@ -1,4 +1,5 @@
 <div class="chat_history">
+  <div class="old_chat_history"><%= link_to "Previous history...", "/channels/#{ @channel.to_param }/messages?history=true&from=today", :target => "_blank" %></div>
 </div>
 
 <div class="sidebar">
