@@ -22,18 +22,16 @@
     <%= image_tag("sound-on.png", :id => "audio_toggle") %>
   </div>
 
-  <div class="rooms_title">Files</div>
+  <div id='file_list_title' class="rooms_title">Files</div>
   <%= form_tag("/channels/#{@channel.to_param}/attachments.js", :remote => true, :id => "file_upload", :html => { :multipart => true }) do |form| %>
   <%= hidden_field :channel_id, @channel.id %>
   <%= file_field_tag 'file' %>
   <%= submit_tag 'Upload' %>
   <% end %>
 
-  <ul id="file_list">
-    <% @channel.attachments.order("created_at DESC").limit(15).each do |attachment| %>
-    <li><a href="<%= attachment.file.url %>"><%= attachment.file_file_name and attachment.file_file_name.truncate(15) %></a></li>
-    <% end %>
-  </ul>
+  <div id="files_list_holder">
+    <ul class="files_list"></ul>
+  </div>
 
   <div class="rooms_title">Rooms</div>
   <div class="rooms_list">
