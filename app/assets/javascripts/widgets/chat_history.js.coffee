@@ -41,7 +41,7 @@ chat_history =
       jQuery.get(@updateMessagesUrl(), $.proxy(@processMessages, this))
 
   compareMessageIds: (x, y) ->
-    x.id > y.id
+    x.id - y.id
 
   defaultMessageTemplate: (message) ->
     me       = ''
@@ -109,7 +109,6 @@ chat_history =
   processMessages: (messages) ->
     notifyNewMessage = false
     triggerScroll = @pastAutoScrollThreshold()
-
     if messages.length > 0
       for message in messages.sort(@compareMessageIds)
         if !@isMessageDisplayed(message)
