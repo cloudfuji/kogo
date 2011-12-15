@@ -2,6 +2,7 @@ audio =
   options:
     volume         : 0
     localSounds    : {}
+    focused        : true
     toggleElement  : $('#audio_toggle')
     sharedChannel  : $('.audio_common')[0]
     privateChannel : $('.audio_private')[0]
@@ -11,6 +12,17 @@ audio =
 
     $(document).bind("#{ @namespace }.play", @play)
     $(document).bind("#{ @namespace }.pause", @pause)
+    $(document).bind('kogo.chat_history.newMessage', $.proxy(@ding, this))
+    console.log("Binding focus event...")
+    $(window).focus($.proxy(@setFocused, this)).blur($.proxy(@setUnfocused, this))
+
+  setFocused: ->
+    @options.focused = true
+    console.log("Focused: ", @options.focused)
+
+  setUnfocused: ->
+    @options.focused = false
+    console.log("Focused: ", @options.focused)
 
   _init: ->
     @options.enabled = true
@@ -55,7 +67,9 @@ audio =
     return "http://#{ window.location.hostname }:#{ window.location.port }/sounds/#{ fileName }"
 
   ding: ->
-    @options.privateChannel.setAttribute('src', "http://#{ window.location.hostname }:#{ window.location.port }/sounds/ding.wav")
-    @options.privateChannel.play()
+    console.log(@options.focused)
+    if !@options.focused
+      @options.privateChannel.setAttribute('src', "http://#{ window.location.hostname }:#{ window.location.port }/sounds/ding.wav")
+      @options.privateChannel.play()
 
 $.widget "kogo.audio", audio

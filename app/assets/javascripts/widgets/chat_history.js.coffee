@@ -127,8 +127,6 @@ chat_history =
     if messages.length > 0
       for message in messages.sort(@compareMessageIds)
         if !@isMessageDisplayed(message)
-          notifyNewMessage = true
-
           _message           = {}
           _message.id        = message.id
           _message.content   = message.content
@@ -146,5 +144,8 @@ chat_history =
       @scrollToLatestMessage()
 
     @options.updateLock = false
+
+    if notifyNewMessage
+      $(document).trigger("#{ @namespace }.newMessage")
 
 $.widget "kogo.chat_history", chat_history
