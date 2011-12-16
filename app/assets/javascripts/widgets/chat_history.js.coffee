@@ -7,11 +7,13 @@ chat_history =
     oldMessageLimit        : 50
     unreadMessageCount     : 0
     latestMessageDisplayed : 0
-    messageHolderTemplate  : $.template('messageHolderTemplate' , '<div class="message-holder ${ me }" id="message_${ message.id }"></div>' )
-    messageMetaTemplate    : $.template('messageMetaTemplate'   , '<div class="message-meta"></div>'                                        )
-    messageAuthorTemplate  : $.template('messageAuthorTemplate' , '<span class="message-author">${ message.user } </span> '                 )
-    messageTimeTemplate    : $.template('messageTimeTemplate'   , '<span class="message-time">at ${ message.posted_at } </span> '           )
-    messageContentTemplate : $.template('messageContentTemplate', '<div class="message-content">${ message.content }</div></div>'           )
+    commands               : []
+    messageHolderTemplate  : $.template('messageHolderTemplate' , '<div class="message-holder ${ me }" id="message_${ message.id }"></div>'                )
+    messageMetaTemplate    : $.template('messageMetaTemplate'   , '<div class="message-meta"></div>'                                                       )
+    messageAuthorTemplate  : $.template('messageAuthorTemplate' , '<span class="message-author">${ message.user } </span> '                                )
+    messageTimeTemplate    : $.template('messageTimeTemplate'   , '<span class="message-time">at ${ message.posted_at } </span> '                          )
+    messageContentTemplate : $.template('messageContentTemplate', '<div class="message-content">${ message.content }</div></div>'                          )
+    messageContentTemplate : $.template('meTemplate', '<div class="message-content"><strong>*** ${ message.user } ${ message.content }</strong></div></div>' )
 
   _create: ->
     # Adds sets the interval for the updateChannel() function
@@ -24,7 +26,12 @@ chat_history =
       $(document).bind('#{ @namespace }.newMessage', $.proxy(@updateTitle, this))
       $(document).bind("#{ @namespace }.chatHistoryUpdate", @updateChannel);
       $(window).focus($.proxy(@setFocused, this)).blur($.proxy(@setUnfocused, this))
+      @options.commands.push({ priority: 0, name: 'default', pattern: /^.*/, process: $.proxy(@defaultMessageTemplate, this) })
+      @options.commands.push({ priority: 10, name: 'me', pattern: /^\/me/, process: $.proxy(@meTemplate, this) })
 
+  # Returns the registered commands sorted by priority, highest first
+  registeredCommands: ->
+    @options.commands.sort((x, y) -> y.priority - x.priority)
 
   setFocused: ->
     @options.unreadMessageCount = 0
@@ -59,6 +66,18 @@ chat_history =
 
   compareMessageIds: (x, y) ->
     x.id - y.id
+
+  meTemplate: (message) ->
+    me       = ''
+    me       = 'me' if message.user == @currentUser()
+
+    message.content = message.content.split("/me ")[1]
+
+    $holder  = $.tmpl('messageHolderTemplate',  { message: message, me: me })
+    $meta    = $.tmpl('messageMetaTemplate',    { message: message         })
+    $time    = $.tmpl('messageTimeTemplate',    { message: message         })
+    $content = $.tmpl('meTemplate',             { message: message         })
+    $holder.append($meta.append($time)).append($content)
 
   defaultMessageTemplate: (message) ->
     me       = ''
@@ -118,8 +137,16 @@ chat_history =
     @scrollToLatestMessage() if @pastAutoScrollThreshold()
 
   addMessageToDisplay: (message) ->
-    $output = @defaultMessageTemplate(message)
-    @addRawOutputToDisplay($output)
+    # [priority, name, pattern, callback]
+    for command in @registeredCommands()
+      _content = message.content
+      if _content.match(command.pattern)
+        # Make a copy of the object so the command can't mutate it out
+        # from under us too badly
+        messageCopy = {}
+        $.extend(messageCopy, message)
+        $output = command.process(message).data('content', _content)
+        return @addRawOutputToDisplay($output)
 
   addRawOutputToDisplay: ($output) ->
     $output.appendTo(@element)
@@ -130,7 +157,8 @@ chat_history =
       $element = $(element)
       _id = $element.attr('id').split("_")[1]
       if _id == "pending"
-        if $element.children('.message-content').text().rubyEscapeHtml() == message.content
+        metaContent = $element.data('content')
+        if metaContent.rubyEscapeHtml() == message.content
           $element.attr('id', "message_#{ message.id }")
           $element.children('.message-meta').children('.message-time').text("at #{ message.posted_at }")
           found = true)
