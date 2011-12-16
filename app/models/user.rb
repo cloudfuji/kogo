@@ -6,7 +6,7 @@ class User < ActiveRecord::Base
   devise :bushido_authenticatable, :trackable
 
   # Setup accessible (or protected) attributes for your model
-  attr_accessible :first_name, :last_name, :email, :password, :password_confirmation, :remember_me
+  attr_accessible :ido_id, :first_name, :last_name, :email, :password, :password_confirmation, :remember_me
 
   def self.kogo
     User.find(1)
