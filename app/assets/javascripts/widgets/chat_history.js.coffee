@@ -33,6 +33,10 @@ chat_history =
   registeredCommands: ->
     @options.commands.sort((x, y) -> y.priority - x.priority)
 
+  registerCommand: (command) ->
+    @options.commands.push(command)
+    console.log(@options.commands)
+
   setFocused: ->
     @options.unreadMessageCount = 0
     document.title = "#{ @channelId() }"
