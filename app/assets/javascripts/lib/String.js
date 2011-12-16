@@ -1,7 +1,7 @@
 /* Truncate 
-Takes the current string and returns a string of @len
-length where the last X characters (after truncation) are replaced
-with @ellipsis, if @len > (String.length + ellipsis)
+   Takes the current string and returns a string of @len
+   length where the last X characters (after truncation) are replaced
+   with @ellipsis, if @len > (String.length + ellipsis)
 */
 if (typeof String.prototype.truncate == undefined) {
   String.prototype.truncate = function (len, ellipsis) {
@@ -16,17 +16,25 @@ if (typeof String.prototype.truncate == undefined) {
 }
 
 // Look into this later. The output has to match ruby's CGI.escape_html output.
-  String.prototype.htmlEncode = function () {
-    var i = this.length,
-    aRet = [];
+//if (typeof String.prototype.rubyEscapeHtml == "undefined") {
+String.prototype.rubyEscapeHtml = function () {
+  var i = this.length,
+  aRet = [];
 
-    while (i--) {
-      var iC = this[i].charCodeAt();
-      if (iC < 65 || iC > 127 || (iC>90 && iC<97)) {
-        aRet[i] = '&#'+iC+';';
-      } else {
-        aRet[i] = this[i];
-      }
+  while (i--) {
+    var iC = this[i].charCodeAt();
+    if (iC == 62) {
+      aRet[i] = '&gt;'
+    } else if (iC == 60) {
+      aRet[i] = '&lt;'
+    } else if (iC == 38) {
+      aRet[i] = '&amp;'
+    } else if (iC == 34) {
+      aRet[i] = '&quot;'
+    } else {
+      aRet[i] = this[i];
     }
-    return aRet.join('');    
   }
+  return aRet.join('');    
+}
+//}

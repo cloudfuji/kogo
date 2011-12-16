@@ -130,7 +130,7 @@ chat_history =
       $element = $(element)
       _id = $element.attr('id').split("_")[1]
       if _id == "pending"
-        if $element.children('.message-content').text() == message.content
+        if $element.children('.message-content').text().rubyEscapeHtml() == message.content
           $element.attr('id', "message_#{ message.id }")
           $element.children('.message-meta').children('.message-time').text("at #{ message.posted_at }")
           found = true)
