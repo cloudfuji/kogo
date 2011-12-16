@@ -32,7 +32,11 @@ $announcement_message_color: #CCCCFF;
   }
 }
 
-.messages {
+.old_chat_history {
+  padding-top: 10px;
+}
+
+.chat_history {
   width: 84%;
   float: left;
   @include single-box-shadow;
