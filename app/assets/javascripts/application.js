@@ -12,10 +12,8 @@
 
 //= require_directory ./lib
 //= require_directory ./widgets
-
-//= require kogo
-
 //= require_directory ./commands
+//= require kogo
 
 /* initial scripts */
 //- require_directory ./alpha

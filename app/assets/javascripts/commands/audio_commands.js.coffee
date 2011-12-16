@@ -3,14 +3,53 @@ audioCommands =
     playCommandPattern: /^\/play .+/
     stfuCommandPattern: /^\/stfu/
     stopCommandPattern: /^\/stop/
+    playTemplate: $.template('playTemplate', '<div><strong>playing ${url}</strong></div>')
+    stopTemplate: $.template('stopTemplate', '<div><strong>stopping the muzak ...</strong></div>')
+
+  currentUser: ->
+    $(document).data('me')
+
+  defaultTemplate: (message, $content) ->
+    me       = ''
+    me       = 'me' if message.user == @currentUser()
+
+    $holder  = $.tmpl('messageHolderTemplate',  { message: message, me: me })
+    $meta    = $.tmpl('messageMetaTemplate',    { message: message         })
+
+    $holder.append($meta).append($content)
+
+  localFileUrl: (fileName) ->
+    "http://#{ window.location.hostname }:#{ window.location.port }/sounds/#{ fileName }"
+
+  localSounds: (name) ->
+    sounds = {
+      "gobushido": @localFileUrl("hey.mp3")
+      "claps"    : @localFileUrl("cheer.mp3")
+      "kolaveri" : @localFileUrl("kolaveri.mp3")
+      "ding"     : @localFileUrl("ding.mp3")
+      }
+
+    sounds[name]
+
+  audioWidget: ->
+    $('.audio_actions:first')
 
   playCommand: (message) ->
-    console.log("message: ", message)
-    url = message.content.split("/play ")[1]
-    $('.audio_actions:first').audio('play', url)
+    soundName = message.content.split("/play ")[1]
+    url = @localSounds(soundName)
+    url ?= soundName
+    @audioWidget().audio('play', url)
+    $content = $.tmpl('playTemplate', { url: url })
+    @defaultTemplate(message, $content)
 
-$('.chat_history:first').chat_history('registerCommand', { priority: 20, name: 'play', pattern: audioCommands.playCommandPattern, cb: audioCommands.playCommand })
-$('.chat_history:first').chat_history('registerCommand', { priority: 20, name: 'stfu', pattern: audioCommands.stfuCommandPattern, cb: audioCommands.pause       })
-$('.chat_history:first').chat_history('registerCommand', { priority: 20, name: 'stop', pattern: audioCommands.stopCommandPattern, cb: audioCommands.pause       })
+  pauseCommand: (message) ->
+    @audioWidget().audio('pause')
+    $content = $.tmpl('stopTemplate')
+    @defaultTemplate(message, $content)
 
-console.log("finished")
+  _init: ->
+    $('.chat_history:first').chat_history('registerCommand', { priority: 20, name: 'play', pattern: @options.playCommandPattern, process: $.proxy(@playCommand , this) })
+    $('.chat_history:first').chat_history('registerCommand', { priority: 20, name: 'stfu', pattern: @options.stfuCommandPattern, process: $.proxy(@pauseCommand, this) })
+    $('.chat_history:first').chat_history('registerCommand', { priority: 20, name: 'stop', pattern: @options.stopCommandPattern, process: $.proxy(@pauseCommand, this) })
+
+$(document).bind('kogo.loaded', $.proxy(audioCommands._init, audioCommands))

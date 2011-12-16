@@ -7,3 +7,5 @@ $ ->
   $('.file_upload_holder:first').file_upload()
   $('.chat_history:first').chat_history()
   $('.search_holder:first').search()
+
+  $(document).trigger("kogo.loaded")
