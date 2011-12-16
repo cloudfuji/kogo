@@ -11,10 +11,11 @@
 //= require vendor/jquery-tmpl/jquery.tmpl.js
 
 //= require_directory ./lib
-//- require_directory ./commands
 //= require_directory ./widgets
 
 //= require kogo
+
+//= require_directory ./commands
 
 /* initial scripts */
 //- require_directory ./alpha
