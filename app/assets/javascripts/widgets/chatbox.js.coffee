@@ -32,11 +32,14 @@ chatbox =
 
   sendMessage: (event) ->
     if event.which == 13 and @element.data('$message_content').val().trim().replace("\n", "").length > 0
-      data = @formToData()
-      @queueMessage(data)
-      $('.chat_history:first').chat_history('addPendingMessageToDisplay', data['message'])
-      @element.data('$message_content').val("")
-      @element.data('$message_content').focus()
+      if event.shiftKey == false
+        data = @formToData()
+        @queueMessage(data)
+        $('.chat_history:first').chat_history('addPendingMessageToDisplay', data['message'])
+        @element.data('$message_content').val("")
+        @element.data('$message_content').focus()
+        # TODO: Add in a newline at cursor position if the shift key
+        # is held down
       event.preventDefault()
       event.stopPropagation()
       false

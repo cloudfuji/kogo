@@ -85,6 +85,7 @@ chat_history =
   defaultMessageTemplate: (message) ->
     me       = ''
     me       = 'me' if message.user == @currentUser()
+
     $holder  = $.tmpl('messageHolderTemplate',  { message: message, me: me })
     $meta    = $.tmpl('messageMetaTemplate',    { message: message         })
     $author  = $.tmpl('messageAuthorTemplate',  { message: message         })
