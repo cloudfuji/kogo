@@ -1,0 +1,108 @@
+@import compass/utilities
+@import compass/css3
+@import compass/layout/sticky-footer
+@import compass/utilities/color
+@import compass/layout/sticky-footer
+
+$header-height: 51px
+$sticky-footer-height: 50px
+
+$highlight-color: #ff9700
+$dark-color: #1f273f
+$neutral-color: #cbcbcb
+
++sticky-footer($sticky-footer-height, ".container", ".container_footer", "footer")
+
+html
+  height: 100%
+
+body
+  height: 100%
+  margin: 0px
+  font-family: Arial
+
+header
+  position: fixed
+  top: 0
+  left: 0
+  width: 100%
+  background: $dark-color
+  border-bottom: 5px solid $neutral-color
+
+.nav_links
+  width: 84%
+  float: right
+  text-align: right
+  a
+    color: #ddd
+    font-size: 120%
+    padding-right: 5px
+    padding-left: 5px
+
+.container
+  width: 100%
+  padding-top: $header-height + 5px
+  width: 100%
+  min-height: 100%
+  background: #fff
+  .sidebar
+    width: 16%
+    position: fixed
+    z-index: 100
+    right: 0px
+    height: 100%
+    background: $neutral-color
+    color: #DDD
+    .users_title, .rooms_title
+      font-size: 14px
+      +linear-gradient(color-stops(#cccccc, #cccccc, white), bottom)
+      color: $dark-color
+      font-weight: bold
+      text-align: right
+      padding-right: 5px
+    .users
+      .selected
+        font-style: italic
+      .user
+        text-align: right
+        padding-top: 3px
+        padding-bottom: 3px
+        padding-right: 5px
+        color: #DDD
+    .rooms
+      margin-bottom: 10px
+      .selected
+        background: $highlight-color
+        color: #fff
+      .room
+        text-align: right
+        padding-top: 3px
+        padding-bottom: 3px
+        padding-right: 5px
+        color: #DDD
+  .container_footer
+    clear: both
+
+footer
+  width: 100%
+  bottom: 0
+  position: fixed
+  background: $neutral-color
+  padding: 10px
+  -moz-box-shadow: inset 0px 0px 0px #000, 0px 3px 17px #000
+  -webkit-box-shadow: inset 0px 0px 0px #000, 0px 3px 17px #000
+  box-shadow: inset 0px 0px 0px #000, 0px 3px 17px #000
+  .chatbox
+    width: 84%
+    float: left
+    #message_content
+      margin: 5px
+      font-size: 13px
+      height: 40px
+      width: 97%
+      +linear-gradient(color-stops(white, white, #dddddd), bottom)
+      +border-radius(4px)
+  .actions
+    width: 16%
+    float: right
+    margin-top: 10px
