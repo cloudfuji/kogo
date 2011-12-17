@@ -24,17 +24,20 @@
     <%= yield %>
     <div class="container_footer"></div>
   </div>
-  <%= javascript_include_tag "application" %>
+
 
   <footer class="footer">
     <%= yield :footer %>
   </footer>
  
- <% if user_signed_in? %>
+  <%= javascript_include_tag "application" %>
+
+   <% if user_signed_in? %>
     <script type="text/javascript">
       (function() { $.data(document, 'me', '<%= current_user.name %>'); })();
     </script>
   <% end %>
   
+  <%= yield :js_meta %>
 </body>
 </html>

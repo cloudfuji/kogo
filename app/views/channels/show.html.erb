@@ -38,11 +38,13 @@
   <div class="actions">
     <img alt="Sound-on" id="audio_toggle" src="/assets/sound-on.png" />
   </div>
+  <%-end %>
 
+  <%- content_for :js_meta do %>
   <script language="javascript">
     $(document).data('channelId',         <%= "'#{@channel.to_param}\'" %>)
     // $(document).data('lastMessageId',     <%= "#{@messages.try(:last).try(:id) || 0}" %>)
     // $(document).data('lastReadMessageId', <%= "#{@messages.try(:last).try(:id) || 0}"  %>)
   </script>
 
-  <%-end %>
+  <%- end %>
