@@ -3,6 +3,11 @@ chatbox =
     intervalTime: 400
     queue: []
     sendLock: false
+    keys:
+      enter: 13
+      tab: 9
+      s: 19
+      e: 101
 
   channelUsers: ->
     users = []
@@ -22,6 +27,7 @@ chatbox =
   _create: ->
     $form = @element.find('form')
     $message_content =  @element.find('#message_content')
+    $message_content.keydown  $.proxy(@processKeyDown, this)
     $message_content.keypress $.proxy(@processKeyPress, this)
     outgoingMessageQueueInterval = setInterval($.proxy(@processQueue, this), @options.intervalTime)
 
@@ -63,26 +69,28 @@ chatbox =
       for name in names
         if name.toLowerCase().startsWith(needle)
           @inputBox().val("#{ value.substring(0, point) }#{name}")
+          return true
+    return false
 
   handleShortcutKey: (event) ->
-    keys =
-      e: 101
-      s: 19
-    if event.which == keys.s
+    if event.which == @options.keys.s
       @expandName()
       event.preventDefault()
       event.stopPropagation()
       false
 
+  processKeyDown: (event) ->
+    if event.which == @options.keys.tab
+      @expandName()
+      event.preventDefault()
+      event.stopPropagation()
+      return false
+
 
   processKeyPress: (event) ->
-    keys =
-      enter: 13
-      tab: 9
-
     if event.ctrlKey == true
       return @handleShortcutKey(event)
-    else if event.which == keys.enter
+    else if event.which == @options.keys.enter
       return @handleEnterKey(event)
 
   # Ideally, this queue would be used globally for all GETs and PUTs,
