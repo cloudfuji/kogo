@@ -54,7 +54,7 @@ audio =
     @options.sharedChannel.setAttribute('src', url)
 
   play: (url) ->
-    @options.sharedChannel.setAudoUrl(url)
+    @options.sharedChannel.setAttribute('src', url)
     @options.sharedChannel.play()
 
   pause: ->

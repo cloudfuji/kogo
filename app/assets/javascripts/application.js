@@ -12,9 +12,8 @@
 //= require vendor/jquery-tmpl/jquery.tmpl.js
 
 //= require_directory ./lib
-//- require_directory ./commands
 //= require_directory ./widgets
-
+//= require_directory ./commands
 //= require kogo
 
 /* initial scripts */

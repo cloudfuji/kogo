@@ -3,17 +3,17 @@ chat_history =
     updateLocked           : false
     focused                : true
     intervalTime           : 3000
-    autoScrollThreshold    : 0.95
+    autoScrollThreshold    : 0.80
     oldMessageLimit        : 50
     unreadMessageCount     : 0
     latestMessageDisplayed : 0
     commands               : []
-    messageHolderTemplate  : $.template('messageHolderTemplate' , '<div class="message-holder ${ me }" id="message_${ message.id }"></div>'                )
-    messageMetaTemplate    : $.template('messageMetaTemplate'   , '<div class="message-meta"></div>'                                                       )
-    messageAuthorTemplate  : $.template('messageAuthorTemplate' , '<span class="message-author">${ message.user } </span> '                                )
-    messageTimeTemplate    : $.template('messageTimeTemplate'   , '<span class="message-time">at ${ message.posted_at } </span> '                          )
-    messageContentTemplate : $.template('messageContentTemplate', '<div class="message-content">${ message.content }</div></div>'                          )
-    messageContentTemplate : $.template('meTemplate', '<div class="message-content"><strong>*** ${ message.user } ${ message.content }</strong></div></div>' )
+    messageHolderTemplate  : $.template('messageHolderTemplate' , '<div class="message-holder ${ me }" id="message_${ message.id }"></div>'                  )
+    messageMetaTemplate    : $.template('messageMetaTemplate'   , '<div class="message-meta"></div>'                                                         )
+    messageAuthorTemplate  : $.template('messageAuthorTemplate' , '<span class="message-author">${ message.user } </span> '                                  )
+    messageTimeTemplate    : $.template('messageTimeTemplate'   , '<span class="message-time">at ${ message.posted_at } </span> '                            )
+    messageContentTemplate : $.template('messageContentTemplate', '<div class="message-content">${ message.content }</div></div>'                            )
+    meTemplate             : $.template('meTemplate', '<div class="message-content"><strong>*** ${ message.user } ${ message.content }</strong></div></div>' )
 
   _create: ->
     # Adds sets the interval for the updateChannel() function
@@ -32,6 +32,9 @@ chat_history =
   # Returns the registered commands sorted by priority, highest first
   registeredCommands: ->
     @options.commands.sort((x, y) -> y.priority - x.priority)
+
+  registerCommand: (command) ->
+    @options.commands.push(command)
 
   setFocused: ->
     @options.unreadMessageCount = 0
@@ -82,6 +85,7 @@ chat_history =
   defaultMessageTemplate: (message) ->
     me       = ''
     me       = 'me' if message.user == @currentUser()
+
     $holder  = $.tmpl('messageHolderTemplate',  { message: message, me: me })
     $meta    = $.tmpl('messageMetaTemplate',    { message: message         })
     $author  = $.tmpl('messageAuthorTemplate',  { message: message         })

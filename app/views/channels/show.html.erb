@@ -3,36 +3,29 @@
 </div>
 
 <div class="sidebar">
-  <div class="rooms_title">Rooms</div>
-  <div class="rooms_list"> </div>
+  <div class="sidebar_title">Rooms</div>
+  <div class="rooms_list sidebar_container"> </div>
 
-  <div class="users_title">Users Online</div>
-  <div class="users_list">
+  <div class="sidebar_title">Users Online</div>
+  <div class="users_list sidebar_container">
     <%- @users.each do |user| %>
     <%- if user[:id] == current_user.id %>
     <div class="user selected" id="<%= "user_#{user[:id]}"%>">
       <%- else %>
       <div class="user">
-        <%-end %>
+	<%-end %>
         <%= "#{user[:first_name]} #{user[:last_name]}" %>
       </div>
       <%- end %>
-    </div>
   </div>
 
-  <div id='file_list_title' class="rooms_title">Files</div>
-  <div class='file_upload_holder'></div>
-
+  <div id='file_list_title' class="sidebar_title">Files</div>
+  <div class='file_upload_holder sidebar_container'></div>
   <div id="files_list_holder">
     <ul class="files_list"></ul>
   </div>
 
-  <div class="audio_actions">
-    <%= image_tag("sound-on.png", :id => "audio_toggle") %>
-  </div>
-
-  <div class="rooms_title">Audio</div>
-
+</div>
 
   <%- content_for :footer do %>
   <div class="chatbox">
@@ -40,6 +33,10 @@
     <%= f.hidden_field :channel_id, :value =>  @message.channel_id %>
     <%=f.text_area :content, :rows => 20 %>
     <%- end %>
+  </div>
+
+  <div class="actions">
+    <img alt="Sound-on" id="audio_toggle" src="/assets/sound-on.png" />
   </div>
 
   <script language="javascript">

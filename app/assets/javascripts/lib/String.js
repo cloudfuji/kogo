@@ -15,6 +15,17 @@ if (typeof String.prototype.truncate == undefined) {
   };
 }
 
+
+String.prototype.startsWith = function (needle) {
+  if (needle.length == 0) return false;
+
+  return this.substring(0, (needle.length)) == needle;
+}
+
+String.prototype.endsWith = function (needle) {
+  return this.substring((needle.length - 1), (this.length - 1)) == needle;
+}
+
 // Look into this later. The output has to match ruby's CGI.escape_html output.
 //if (typeof String.prototype.rubyEscapeHtml == "undefined") {
 String.prototype.rubyEscapeHtml = function () {

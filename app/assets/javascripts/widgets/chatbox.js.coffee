@@ -3,6 +3,17 @@ chatbox =
     intervalTime: 400
     queue: []
     sendLock: false
+    keys:
+      enter: 13
+      tab: 9
+      s: 19
+      e: 101
+
+  channelUsers: ->
+    users = []
+    $('.users_list_user').each((index, element) ->
+      users.push($(element).text()))
+    users
 
   channelId: ->
     $(document).data('channelId')
@@ -10,10 +21,14 @@ chatbox =
   currentUser: ->
     $(document).data('me')
 
+  inputBox: ->
+    @element.find('#message_content')
+
   _create: ->
     $form = @element.find('form')
     $message_content =  @element.find('#message_content')
-    $message_content.keypress $.proxy(@sendMessage, this)
+    $message_content.keydown  $.proxy(@processKeyDown, this)
+    $message_content.keypress $.proxy(@processKeyPress, this)
     outgoingMessageQueueInterval = setInterval($.proxy(@processQueue, this), @options.intervalTime)
 
     @element.data('$form', $form)
@@ -30,16 +45,53 @@ chatbox =
   messageSubmitUrl: ->
     "/channels/#{ @channelId() }/messages.json"
 
-  sendMessage: (event) ->
-    if event.which == 13 and @element.data('$message_content').val().trim().replace("\n", "").length > 0
-      data = @formToData()
-      @queueMessage(data)
-      $('.chat_history:first').chat_history('addPendingMessageToDisplay', data['message'])
-      @element.data('$message_content').val("")
-      @element.data('$message_content').focus()
+  handleEnterKey: (event) ->
+    if event.shiftKey == false
+      if @element.data('$message_content').val().trim().replace("\n", "").length > 0
+        data = @formToData()
+        @queueMessage(data)
+        $('.chat_history:first').chat_history('addPendingMessageToDisplay', data['message'])
+        @element.data('$message_content').val("")
+        @element.data('$message_content').focus()
+        event.preventDefault()
+        event.stopPropagation()
+        false
+
+  # TODO: This should be expanded to expand the name under the current
+  # cursor position rather than just expanding potential names at the
+  # end of the line
+  expandName: ->
+    names = @channelUsers()
+    value = @inputBox().val()
+    point = value.lastIndexOf("@")
+    needle = value.substring(point + 1, value.length).trim()
+    if needle.length > 0
+      for name in names
+        if name.toLowerCase().startsWith(needle)
+          @inputBox().val("#{ value.substring(0, point) }#{name}")
+          return true
+    return false
+
+  handleShortcutKey: (event) ->
+    if event.which == @options.keys.s
+      @expandName()
       event.preventDefault()
       event.stopPropagation()
       false
+
+  processKeyDown: (event) ->
+    if event.which == @options.keys.tab
+      @expandName()
+      event.preventDefault()
+      event.stopPropagation()
+      return false
+
+
+  processKeyPress: (event) ->
+    if event.ctrlKey == true
+      return @handleShortcutKey(event)
+    else if event.which == @options.keys.enter
+      return @handleEnterKey(event)
 
   # Ideally, this queue would be used globally for all GETs and PUTs,
   # with puts having a higher priority and being sent out sooner. This

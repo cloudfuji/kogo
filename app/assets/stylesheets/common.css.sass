@@ -5,6 +5,7 @@
 @import compass/layout/sticky-footer
 
 $header-height: 51px
+$sidebar-width: 12%
 $sticky-footer-height: 50px
 
 $highlight-color: #ff9700
@@ -28,10 +29,17 @@ header
   width: 100%
   background: $dark-color
   border-bottom: 5px solid $neutral-color
-
+  img
+    float: left
+  
 #search_form
   float: right
-  
+  input
+    +border-radius(5px)
+    padding: 5px
+    margin-right: 5px
+    width: 150px
+    margin-top: 10px
 
 .container
   width: 100%
@@ -39,42 +47,64 @@ header
   width: 100%
   min-height: 100%
   background: #fff
-  .sidebar
-    width: 16%
-    top: $header-height + 5px
-    position: fixed
-    z-index: 100
-    right: 0px
-    height: 100%
-    background: $neutral-color
+
+.frame
+  display: block
+  background: transparent
+  border: 5px solid white
+  border-left: none
+  +border-radius(5px)
+  height: 40%
+  width: 80%
+  position: fixed
+  top: $header-height + 5px
+  left: 0px
+
+.sidebar
+  width: $sidebar-width
+  top: $header-height + 5px
+  position: fixed
+  z-index: 100
+  right: 0px
+  height: 100%
+  background: $neutral-color
+  border-left: 5px solid $neutral-color
+  color: $dark-color
+
+.sidebar_title
+  font-size: 14p
+  border: 1px solid $dark-color
+  border-right: none
+  +linear-gradient(color-stops($dark-color, $dark-color, $neutral-color), bottom)
+  color: white
+  font-weight: bold
+  text-align: left
+  padding: 5px 0 5px 5px
+
+.sidebar_container
+  padding-left: 5px
+  height: 20%
+
+.users
+  .selected
+    font-style: italic
+  .user
+    text-align: right
+    padding-top: 3px
+    padding-bottom: 3px
+    padding-right: 5px
     color: #DDD
-    .users_title, .rooms_title
-      font-size: 14px
-      +linear-gradient(color-stops(#cccccc, #cccccc, white), bottom)
-      color: $dark-color
-      font-weight: bold
+  .rooms
+    margin-bottom: 10px
+    .selected
+      background: $highlight-color
+      color: #fff
+    .room
       text-align: right
+      padding-top: 3px
+      padding-bottom: 3px
       padding-right: 5px
-    .users
-      .selected
-        font-style: italic
-      .user
-        text-align: right
-        padding-top: 3px
-        padding-bottom: 3px
-        padding-right: 5px
-        color: #DDD
-    .rooms
-      margin-bottom: 10px
-      .selected
-        background: $highlight-color
-        color: #fff
-      .room
-        text-align: right
-        padding-top: 3px
-        padding-bottom: 3px
-        padding-right: 5px
-        color: #DDD
+      color: #DDD
   .container_footer
     clear: both
 
@@ -87,17 +117,21 @@ footer
   -moz-box-shadow: inset 0px 0px 0px #000, 0px 3px 17px #000
   -webkit-box-shadow: inset 0px 0px 0px #000, 0px 3px 17px #000
   box-shadow: inset 0px 0px 0px #000, 0px 3px 17px #000
-  .chatbox
-    width: 84%
-    float: left
-    #message_content
-      margin: 5px
-      font-size: 13px
-      height: 40px
-      width: 97%
-      +linear-gradient(color-stops(white, white, #dddddd), bottom)
-      +border-radius(4px)
   .actions
-    width: 16%
+    width: $sidebar-width
+    text-align: left
+    position: relative
+    z-index: 200
     float: right
     margin-top: 10px
+
+.chatbox
+  width: 84%
+  float: left
+  #message_content
+    margin: 5px
+    font-size: 13px
+    height: 40px
+    width: 97%
+    +linear-gradient(color-stops(white, white, #dddddd), bottom)
+    +border-radius(4px)
