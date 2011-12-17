@@ -44,10 +44,6 @@
     <%- end %>
   </div>
 
-  <div class="actions">
-    <%= image_tag("sound-on.png", :id => "audio_toggle") %>
-  </div>
-
   <script language="javascript">
     $(document).data('channelId',         <%= "'#{@channel.to_param}\'" %>)
     // $(document).data('lastMessageId',     <%= "#{@messages.try(:last).try(:id) || 0}" %>)
