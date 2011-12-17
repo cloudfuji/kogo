@@ -3,24 +3,8 @@
 </div>
 
 <div class="sidebar">
-  <div class="rooms_title">Search</div>
-  <div class="search_holder"></div>
-
-  <div class="rooms_title">Audio</div>
-  <div class="audio_actions">
-    <%= image_tag("sound-on.png", :id => "audio_toggle") %>
-  </div>
-
-  <div id='file_list_title' class="rooms_title">Files</div>
-  <div class='file_upload_holder'></div>
-
-  <div id="files_list_holder">
-    <ul class="files_list"></ul>
-  </div>
-
   <div class="rooms_title">Rooms</div>
-  <div class="rooms_list">
-  </div>
+  <div class="rooms_list"> </div>
 
   <div class="users_title">Users Online</div>
   <div class="users_list">
@@ -35,6 +19,20 @@
       <%- end %>
     </div>
   </div>
+
+  <div id='file_list_title' class="rooms_title">Files</div>
+  <div class='file_upload_holder'></div>
+
+  <div id="files_list_holder">
+    <ul class="files_list"></ul>
+  </div>
+
+  <div class="audio_actions">
+    <%= image_tag("sound-on.png", :id => "audio_toggle") %>
+  </div>
+
+  <div class="rooms_title">Audio</div>
+
 
   <%- content_for :footer do %>
   <div class="chatbox">

@@ -17,11 +17,9 @@
   <div class="container">
     <header>
       <%= image_tag "logo.png", :alt => "Kogo", :width => "165", :height => "51" %>
-      <div class="nav_links">
-	<%- if user_signed_in? %>
-	<%= link_to "Logout", destroy_user_session_path, :method => :delete %>
-	<%- end %>
-      </div>
+      <form id="search_form">
+	<input class="search_term autobox" name="search_term" type="text" value="Search">
+      </form>
     </header>
     <%= yield %>
     <div class="container_footer"></div>
