@@ -15,26 +15,22 @@
   
 
   <div class="container">
-    <div class="nav_wrapper">
-      <div class="nav_bar">
-	<div class="app_name">
-	  <%= image_tag "kogo-logo.png", :alt => "Kogo" %>
-	</div>
-	<div class="nav_links">
-	  <%- if user_signed_in? %>
-	    <%= link_to "Logout", destroy_user_session_path, :method => :delete %>
-	  <%- end %>
-	</div>
+    <header>
+      <%= image_tag "logo.png", :alt => "Kogo", :width => "165", :height => "51" %>
+      <div class="nav_links">
+	<%- if user_signed_in? %>
+	<%= link_to "Logout", destroy_user_session_path, :method => :delete %>
+	<%- end %>
       </div>
-    </div>
+    </header>
     <%= yield %>
     <div class="container_footer"></div>
   </div>
   <%= javascript_include_tag "application" %>
 
-  <div class="footer">
+  <footer class="footer">
     <%= yield :footer %>
-  </div>
+  </footer>
  
  <% if user_signed_in? %>
     <script type="text/javascript">
