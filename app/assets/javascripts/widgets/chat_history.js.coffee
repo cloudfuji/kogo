@@ -102,13 +102,16 @@ chat_history =
   scrollToLatestMessage: ->
     $('body').scrollTop(100000)
 
+  numericalSort: (x, y) ->
+    x - y
+
   messagesInDisplay: ->
     _messages = []
     $('.message-holder').each((index, element) ->
       _id = parseInt($(element).attr('id').split("_")[1])
       _id = 0 if isNaN(_id)
       _messages.push(_id))
-    _messages.sort()
+    _messages.sort(@numericalSort)
 
   isMessageDisplayed: (message) ->
     @messagesInDisplay().indexOf(message.id) != -1

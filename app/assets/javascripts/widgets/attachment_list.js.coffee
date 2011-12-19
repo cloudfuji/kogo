@@ -3,7 +3,7 @@ attachments_list =
     intervalTime       : 60000
     attachments        : []
     $titleBar          : $('#file_list_title')
-    attachmentTemplate : $.template('attachmentTemplate', '<li id="attachments_${attachment.id}" class="attachments_list_attachment"><a target="_blank" href="${attachment.url}">${attachment.file_file_name}</a></li>')
+    attachmentTemplate : $.template('attachmentTemplate', '<li id="attachments_${attachment.id}" class="attachments_list_attachment"><span class="attachment-control"></span><a target="_blank" href="${attachment.url}">${attachment.file_file_name}</a></li>')
 
   _create: ->
     attachmentUpdateInterval = setInterval($.proxy(@retrieveAttachmentsFromServer, this), @options.intervalTime)
@@ -29,6 +29,12 @@ attachments_list =
       @addAttachmentToDisplay(attachment)
       @updateAttachmentControlStyle(attachment)
 
+  handlePlayLinkClick: (event, url) ->
+    $('.audio_actions:first').audio('play', url)
+    event.preventDefault()
+    event.stopPropagation()
+    return false
+
   addAttachmentToDisplay: (attachment) ->
     if !@isAttachmentDisplayed(attachment)
       _attachment                = {}
@@ -36,7 +42,16 @@ attachments_list =
       _attachment.name           = attachment.name
       _attachment.url            = attachment.url
       _attachment.file_file_name = attachment.file_file_name
-      $.tmpl(@options.attachmentTemplate, { attachment: _attachment }).appendTo(@element)
+      $content = $.tmpl(@options.attachmentTemplate, { attachment: _attachment })
+
+      if attachment.url.match(/\.(mp3|mp4|m4a|mov|wav|aiff)/i)
+        helper = (event) ->
+          @handlePlayLinkClick(event, attachment.url)
+        $control = $("<a 'audio-play' href='#'>|&gt;</a>")
+        $control.click($.proxy(helper, this))
+        $content.find('.attachment-control').append($control)
+
+      $content.appendTo(@element)
 
   # TODO: this should add a 'play' button next to any music
   # attachments
