@@ -1,1 +1,1 @@
-$('#file_list').children(':first').before('<li><a href="<%= @attachment.file.url %>"><%= @attachment.file_file_name.truncate(15) %></a></li>');
+$('.files_list:first').before('<li><a target="_blank" href="<%= @attachment.file.url %>"><%= @attachment.file_file_name.truncate(15) %></a></li>');
