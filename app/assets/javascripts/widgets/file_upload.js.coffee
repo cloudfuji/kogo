@@ -21,6 +21,6 @@ file_upload =
     $('meta[name=csrf-token]').attr('content')
 
   _create: ->
-    $.tmpl(@options.fileUploadTemplate, { channelId: @channelId(), csrfParam: @csrfParam(), csrfToken: @csrfToken() }).appendTo(@element)
+    $.tmpl(@options.fileUploadTemplate, { channelId: @channelId(), csrfParam: @csrfParam(), csrfToken: @csrfToken() }).prependTo(@element)
 
 $.widget "kogo.file_upload", file_upload
