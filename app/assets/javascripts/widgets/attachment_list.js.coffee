@@ -26,11 +26,12 @@ attachments_list =
 
   updateDisplay: (attachments) ->
     for attachment in attachments
+
       @addAttachmentToDisplay(attachment)
       @updateAttachmentControlStyle(attachment)
 
   handlePlayLinkClick: (event, url) ->
-    $('.audio_actions:first').audio('play', url)
+    $('.actions:first').audio('play', url)
     event.preventDefault()
     event.stopPropagation()
     return false
@@ -47,7 +48,7 @@ attachments_list =
       if attachment.url.match(/\.(mp3|mp4|m4a|mov|wav|aiff)/i)
         helper = (event) ->
           @handlePlayLinkClick(event, attachment.url)
-        $control = $("<a 'audio-play' href='#'>|&gt;</a>")
+        $control = $("<a 'audio-play' href='#'>[&gt;</a>")
         $control.click($.proxy(helper, this))
         $content.find('.attachment-control').append($control)
 
