@@ -32,7 +32,7 @@ audioCommands =
     sounds[name]
 
   audioWidget: ->
-    $('.audio_actions:first')
+    $('.actions:first')
 
   handlePlayLinkClick: (event, url) ->
     @audioWidget().audio('play', url)
