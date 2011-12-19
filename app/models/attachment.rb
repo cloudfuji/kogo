@@ -12,4 +12,8 @@ class Attachment < ActiveRecord::Base
                     :path           => "#{ENV['S3_PREFIX']}/:attachment/:id/:style/:basename.:extension"
 
   attr_accessible :file
+
+  def url
+    file.to_s
+  end
 end

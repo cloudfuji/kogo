@@ -5,6 +5,12 @@ class AttachmentsController < ApplicationController
   # GET /attachments
   # GET /attachments.json
   def index
+    @channel    = Channel.find_by_name(params[:channel_id])
+    @attachments = @channel.attachments.order("created_at DESC")
+
+    respond_to do |format|
+      format.json { render :json => @attachments.to_json(:methods => :url) }
+    end
   end
 
   # GET /attachments/1

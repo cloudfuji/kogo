@@ -1,45 +1,55 @@
-# $(document).ready() equivalent
-$ ->
-  console.log("Loading audio_commands")
+audioCommands =
+  options:
+    playCommandPattern: /^\/play .+/
+    stfuCommandPattern: /^\/stfu/
+    stopCommandPattern: /^\/stop/
+    playTemplate: $.template('playTemplate', '<div><strong>playing ${url}</strong></div>')
+    stopTemplate: $.template('stopTemplate', '<div><strong>stopping the muzak ...</strong></div>')
 
-  audio = window.kogo.audio
+  currentUser: ->
+    $(document).data('me')
 
-  localFileUrl = (fileName) ->
-    return "http://#{ window.location.hostname }:#{ window.location.port }/sounds/#{ fileName }"
+  defaultTemplate: (message, $content) ->
+    me       = ''
+    me       = 'me' if message.user == @currentUser()
 
-  localSounds =
-    "gobushido": localFileUrl("hey.mp3")
-    "claps"    : localFileUrl("cheer.mp3")
-    "kolaveri" : localFileUrl("kolaveri.mp3")
-    "ding"     : localFileUrl("ding.mp3")
+    $holder  = $.tmpl('messageHolderTemplate',  { message: message, me: me })
+    $meta    = $.tmpl('messageMetaTemplate',    { message: message         })
 
-  pause = () ->
-    audio.pause()
-    $("<div class='message'>stopping the muzak</div>")
+    $holder.append($meta).append($content)
 
-  play = (url) ->
-    console.log("playing #{ url }")
-    audio.setAudioUrl(url)
-    audio.play()
-    $("<div class='message'>Playing~~ #{url}</div>")
+  localFileUrl: (fileName) ->
+    "http://#{ window.location.hostname }:#{ window.location.port }/sounds/#{ fileName }"
 
-  playCommand = (params, raw) ->
-    console.log("params:")
-    console.log(params)
-    console.log("raw:")
-    console.log(raw)
-    params = raw.split(" ").slice(1).join(" ")
-    for sound, url of localSounds
-      return play(url) if params.trim().match(sound)
-    if params.trim().match(/^http/)
-      play(params.trim())
+  localSounds: (name) ->
+    sounds = {
+      "gobushido": @localFileUrl("hey.mp3")
+      "claps"    : @localFileUrl("cheer.mp3")
+      "kolaveri" : @localFileUrl("kolaveri.mp3")
+      "ding"     : @localFileUrl("ding.mp3")
+      }
 
-  $('#audio_toggle').click((event) ->
-    event.preventDefault
-    window.kogo.audio.toggle())
+    sounds[name]
 
-  window.kogo.commands.register('play', /^\/play .*/, playCommand)
-  window.kogo.commands.register('stfu', /^\/stfu/, pause)
-  window.kogo.commands.register('stop', /^\/stop/, pause)
+  audioWidget: ->
+    $('.audio_actions:first')
 
-  console.log("finished")
+  playCommand: (message) ->
+    soundName = message.content.split("/play ")[1]
+    url = @localSounds(soundName)
+    url ?= soundName
+    @audioWidget().audio('play', url)
+    $content = $.tmpl('playTemplate', { url: url })
+    @defaultTemplate(message, $content)
+
+  pauseCommand: (message) ->
+    @audioWidget().audio('pause')
+    $content = $.tmpl('stopTemplate')
+    @defaultTemplate(message, $content)
+
+  _init: ->
+    $('.chat_history:first').chat_history('registerCommand', { priority: 20, name: 'play', pattern: @options.playCommandPattern, process: $.proxy(@playCommand , this) })
+    $('.chat_history:first').chat_history('registerCommand', { priority: 20, name: 'stfu', pattern: @options.stfuCommandPattern, process: $.proxy(@pauseCommand, this) })
+    $('.chat_history:first').chat_history('registerCommand', { priority: 20, name: 'stop', pattern: @options.stopCommandPattern, process: $.proxy(@pauseCommand, this) })
+
+$(document).bind('kogo.loaded', $.proxy(audioCommands._init, audioCommands))

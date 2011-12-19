@@ -7,4 +7,15 @@
 //= require jquery
 //= require jquery_ujs
 //= require jquery.remotipart
-//= require_tree
+//= require jquery-ui-1.8.12.custom/js/jquery-ui-1.8.12.custom.min.js
+//= require vendor/jquery.autobox.js
+//= require vendor/jquery-tmpl/jquery.tmpl.js
+
+//= require_directory ./lib
+//= require_directory ./widgets
+//= require_directory ./commands
+//= require kogo
+
+/* initial scripts */
+//- require_directory ./alpha
+

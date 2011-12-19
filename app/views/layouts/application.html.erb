@@ -3,11 +3,10 @@
 <head>
   <title><%= " #{@title}" || " Kogo" %></title>
   <%= stylesheet_link_tag    "application" %>
-  <%= javascript_include_tag "application" %>
+
   <%= csrf_meta_tags %>
 
   <%= yield :header %>
-
 </head>
 <body>
   <audio class="audio_private"></audio>
@@ -16,30 +15,28 @@
   
 
   <div class="container">
-    <div class="nav_wrapper">
-      <div class="nav_bar">
-	<div class="app_name">
-	  <%= image_tag "kogo-logo.png", :alt => "Kogo" %>
-	</div>
-	<div class="nav_links">
-	  <%- if user_signed_in? %>
-	    <%= link_to "Logout", destroy_user_session_path, :method => :delete %>
-	  <%- end %>
-	</div>
-      </div>
-    </div>
+    <header>
+      <%= image_tag "logo.png", :alt => "Kogo", :width => "165", :height => "51" %>
+      <form id="search_form">
+	<input class="search_term autobox" name="search_term" type="text" value="Search Archives">
+      </form>
+    </header>
     <%= yield %>
-    <div class="container_footer"></div>
   </div>
 
-  <div class="footer">
+
+  <footer>
     <%= yield :footer %>
-  </div>
+  </footer>
+ 
+  <%= javascript_include_tag "application" %>
 
-  <% if user_signed_in? %>
+   <% if user_signed_in? %>
     <script type="text/javascript">
       (function() { $.data(document, 'me', '<%= current_user.name %>'); })();
     </script>
   <% end %>
+  
+  <%= yield :js_meta %>
 </body>
 </html>
