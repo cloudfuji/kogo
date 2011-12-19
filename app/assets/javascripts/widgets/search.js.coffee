@@ -3,20 +3,15 @@ search =
     minimumSearchLength: 3
     displayed: false
 
-  chatBox: ->
-    $('#message_content')
-
-  _handleLinkBehavior: (event) ->
-    @toggleSearchDisplay()
-    event.preventDefault()
-    event.stopPropagation()
-
   _init: ->
     $input = @element.find('.search_term:first')
     $input.keypress $.proxy(@launchSearch, this)
 
+  channelId: ->
+    $(document).data('channelId')
+
   searchQueryUrl: (query) ->
-    "/channels/#{ @$(document).data('channelId')() }/search?query=#{ query }"
+    "/channels/#{ @channelId() }/search?query=#{ query }"
 
   launchSearch: (event) ->
     $input = @element.find('.search_term:first')
