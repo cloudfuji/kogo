@@ -3,7 +3,7 @@ audioCommands =
     playCommandPattern: /^\/play .+/
     stfuCommandPattern: /^\/stfu/
     stopCommandPattern: /^\/stop/
-    playTemplate: $.template('playTemplate', '<div><strong>playing ${url}</strong></div>')
+    playTemplate: $.template('playTemplate', '<div><strong><a class="audio-play">playing</a> <a target="_blank" href="${url}">${url}</a></strong></div>')
     stopTemplate: $.template('stopTemplate', '<div><strong>stopping the muzak ...</strong></div>')
 
   currentUser: ->
@@ -34,12 +34,21 @@ audioCommands =
   audioWidget: ->
     $('.audio_actions:first')
 
+  handlePlayLinkClick: (event, url) ->
+    @audioWidget().audio('play', url)
+    event.preventDefault()
+    event.stopPropagation()
+    return false
+
   playCommand: (message) ->
     soundName = message.content.split("/play ")[1]
     url = @localSounds(soundName)
     url ?= soundName
     @audioWidget().audio('play', url)
     $content = $.tmpl('playTemplate', { url: url })
+    helper = (event) ->
+      @handlePlayLinkClick(event, url)
+    $content.find('.audio-play').click($.proxy(helper, this))
     @defaultTemplate(message, $content)
 
   pauseCommand: (message) ->

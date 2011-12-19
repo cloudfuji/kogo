@@ -21,11 +21,9 @@ linkCommand =
     $holder.append($meta.append($author).append($time)).append($content)
 
   linkEmbed: (message) ->
-    console.log("Linkifying!")
     content = message.content.replace(/(http\S*)/g, '<a target="_blank" href="$1">$1</a>')
     $content = $.tmpl('linkTemplate', { content: content })
     $content = $("<div class='message-content'>#{ content }</div>")
-    console.log($content)
     @defaultTemplate(message, $content)
 
   _init: ->
