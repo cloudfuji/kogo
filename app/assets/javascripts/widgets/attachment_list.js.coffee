@@ -44,7 +44,7 @@ attachments_list =
       _attachment.file_file_name = attachment.file_file_name
       $content = $.tmpl(@options.attachmentTemplate, { attachment: _attachment })
 
-      if attachment.url.match(/\.(mp3|mp4|mov|wav|aiff)/i)
+      if attachment.url.match(/\.(mp3|mp4|m4a|mov|wav|aiff)/i)
         helper = (event) ->
           @handlePlayLinkClick(event, attachment.url)
         $control = $("<a 'audio-play' href='#'>|&gt;</a>")
