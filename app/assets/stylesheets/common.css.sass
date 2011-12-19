@@ -1,18 +1,14 @@
 @import compass/utilities
 @import compass/css3
-@import compass/layout/sticky-footer
 @import compass/utilities/color
-@import compass/layout/sticky-footer
 
 $header-height: 51px
 $sidebar-width: 12%
-$sticky-footer-height: 50px
 
 $highlight-color: #ff9700
 $dark-color: #1f273f
 $neutral-color: #cbcbcb
 
-+sticky-footer($sticky-footer-height, ".container", ".container_footer", "footer")
 
 html
   height: 100%
@@ -105,15 +101,13 @@ header
       padding-bottom: 3px
       padding-right: 5px
       color: #DDD
-  .container_footer
-    clear: both
 
 footer
   width: 100%
   bottom: 0
   position: fixed
-  background: $neutral-color
   padding: 10px
+  background: $neutral-color
   -moz-box-shadow: inset 0px 0px 0px #000, 0px 3px 17px #000
   -webkit-box-shadow: inset 0px 0px 0px #000, 0px 3px 17px #000
   box-shadow: inset 0px 0px 0px #000, 0px 3px 17px #000
