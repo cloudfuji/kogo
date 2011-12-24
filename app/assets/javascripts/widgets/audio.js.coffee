@@ -8,7 +8,6 @@ audio =
     privateChannel : $('.audio_private')[0]
 
   _create: ->
-    console.log('toggle element', @options.toggleElement);
     @options.toggleElement.click($.proxy(this.toggle, this))
 
     $(document).bind("#{ @namespace }.play", @play)
