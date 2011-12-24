@@ -1,7 +1,7 @@
 youtubeEmbedCommand =
   options:
     youtubeEmbedPattern: /^http(s)?:\/\/www.youtube.com\/watch/i
-    youtubeIdPattern: /\Wv=(\w*)/
+    youtubeIdPattern: /\Wv=([\w|\-]*)/
     youtubeTemplate: $.template('youtubeTemplate', '<div class="youtube-preview"><a target="_blank" class="youtube-preview-link" href="${ youtubeVideoUrl }"><img class="youtube-preview-image" src="${ youtubeImageUrl }" /></a></div>')
 
   currentUser: ->
