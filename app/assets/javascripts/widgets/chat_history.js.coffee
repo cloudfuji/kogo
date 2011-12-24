@@ -3,7 +3,7 @@ chat_history =
     updateLocked           : false
     focused                : true
     intervalTime           : 3000
-    autoScrollThreshold    : 0.80
+    autoScrollThreshold    : 0.90
     oldMessageLimit        : 50
     unreadMessageCount     : 0
     latestMessageDisplayed : 0
@@ -140,13 +140,17 @@ chat_history =
   messageTimeToString: (time) ->
     if (typeof time == "object")
       am = time.getHours() < 12
-      ampm = "AM" if am == true
       hours = time.getHours()
+      ampm = "AM" if am == true
       if am != true
         ampm = "PM"
-        hours = hours - 12
+        if hours != 12
+          hours = hours - 12
+      minutes = time.getMinutes().toString()
+      if minutes.length == 1
+        minutes = "0#{minutes}"
 
-      return "#{ time.getFullYear() }-#{ time.getMonth() }-#{ time.getDate() } #{ hours }:#{ time.getMinutes() }#{ ampm }"
+      return "#{ time.getFullYear() }-#{ time.getMonth() + 1 }-#{ time.getDate() } #{ hours }:#{ minutes }#{ ampm }"
     else
       return time
 
@@ -190,7 +194,6 @@ chat_history =
 
   processMessages: (messages) ->
     notifyNewMessage = false
-    triggerScroll = @pastAutoScrollThreshold()
     if messages.length > 0
       for message in messages.sort(@compareMessageIds)
         if !@isMessageDisplayed(message)
@@ -205,6 +208,7 @@ chat_history =
           _message.user      = message.user
 
           if !@checkForPendingMessage(_message)
+            triggerScroll = @pastAutoScrollThreshold()
             @addMessageToDisplay(_message)
             notifyNewMessage = true
             @options.unreadMessageCount += 1 if !@options.focused

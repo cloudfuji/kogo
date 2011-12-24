@@ -36,7 +36,7 @@ class MessagesController < ApplicationController
           :id => message.id,
           :user => message.user.name,
           :content => message.escaped_content,
-          :posted_at => message.created_at.utc.to_i
+          :posted_at => message.created_at.to_i
         })
     end
     
