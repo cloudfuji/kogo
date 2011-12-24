@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20111213031006) do
+ActiveRecord::Schema.define(:version => 20111224173106) do
 
   create_table "attachments", :force => true do |t|
     t.integer  "user_id"
@@ -54,6 +54,7 @@ ActiveRecord::Schema.define(:version => 20111213031006) do
     t.string   "locale"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.string   "timezone"
   end
 
   add_index "users", ["ido_id"], :name => "index_users_on_ido_id", :unique => true
