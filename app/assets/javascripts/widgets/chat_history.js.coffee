@@ -134,6 +134,22 @@ chat_history =
     for messageId in messageIds
       @removeMessage(messageId)
 
+  # TODO: This is a strange mix of US/International time
+  # presentation. Find a nice way to handle it appropriately in each
+  # timezone
+  messageTimeToString: (time) ->
+    if (typeof time == "object")
+      am = time.getHours() < 12
+      ampm = "AM" if am == true
+      hours = time.getHours()
+      if am != true
+        ampm = "PM"
+        hours = hours - 12
+
+      return "#{ time.getFullYear() }-#{ time.getMonth() }-#{ time.getDate() } #{ hours }:#{ time.getMinutes() }#{ ampm }"
+    else
+      return time
+
   addPendingMessageToDisplay: (message) ->
     _message           = {}
     _message.id        = "pending"
@@ -178,14 +194,18 @@ chat_history =
     if messages.length > 0
       for message in messages.sort(@compareMessageIds)
         if !@isMessageDisplayed(message)
+          # Handle the timezones
+          messagePostedAt = new Date(0)
+          messagePostedAt.setUTCSeconds(message.posted_at)
+
           _message           = {}
           _message.id        = message.id
           _message.content   = message.content
-          _message.posted_at = message.posted_at
+          _message.posted_at = @messageTimeToString(messagePostedAt)
           _message.user      = message.user
 
-          if !@checkForPendingMessage(message)
-            @addMessageToDisplay(message)
+          if !@checkForPendingMessage(_message)
+            @addMessageToDisplay(_message)
             notifyNewMessage = true
             @options.unreadMessageCount += 1 if !@options.focused
 

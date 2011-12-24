@@ -24,7 +24,7 @@ class Channel < ActiveRecord::Base
   # processing
   def add_user(user)
     unless user_in_room?(user)
-      users[user.id] = [Time.now, user.name]
+      users[user.id] = {:heartbeat => Time.now, :name => user.name, :timezone => user.timezone}
       save
 
       announce("#{ user.name } has entered the channel")
@@ -42,7 +42,7 @@ class Channel < ActiveRecord::Base
 
   def touch_user(user)
     add_user(user) unless user_in_room?(user)
-    users[user.id] = [Time.now, user.name]
+    users[user.id][:heartbeat] = Time.now
     save
   end
 
@@ -50,7 +50,7 @@ class Channel < ActiveRecord::Base
     puts users.inspect
 
     users.keys.each do |user_id|
-      remove_user(User.find(user_id)) if (users[user_id].first < 2.minutes.ago)
+      remove_user(User.find(user_id)) if (users[user_id][:heartbeat] < 2.minutes.ago)
     end
   end
 

@@ -26,8 +26,8 @@ users_list =
     for userId of users
       user               = {}
       user.id            = parseInt(userId)
-      user.lastHeartBeat = users[userId][0]
-      user.name          = users[userId][1]
+      user.lastHeartBeat = users[userId].heartbeat
+      user.name          = users[userId].name
       @addUserToDisplay(user)
 
     # Now remove users that are displayed but are not in this list. Is
@@ -39,7 +39,10 @@ users_list =
 
   addUserToDisplay: (user) ->
     if !@isUserDisplayed(user)
-      $.tmpl(@options.userTemplate, { id: user.id, name: user.name }).data('name', user.name).data('user_id', user.id).appendTo(@element)
+      $content = $.tmpl(@options.userTemplate, { id: user.id, name: user.name })
+      $content.data('name', user.name)
+      $content.data('user_id', user.id)
+      $content.appendTo(@element)
 
   removeUserFromDisplay: (user_id) ->
     $("#user_#{user_id}").remove()
