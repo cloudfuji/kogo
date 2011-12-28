@@ -9,7 +9,7 @@ gem 'haml-rails'
 gem 'sqlite3'
 
 gem 'bushido', :git => 'https://github.com/Bushido/bushidogem.git'
-gem 'devise_bushido_authenticatable', :git => 'https://github.com/Bushido/devise_cas_authenticatable.git'
+gem 'devise_bushido_authenticatable', :path => "../devise_cas_authenticatable" #:git => 'https://github.com/Bushido/devise_cas_authenticatable.git'
 
 gem 'aws-s3'
 gem 'paperclip'
