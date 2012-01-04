@@ -9,10 +9,12 @@ gem 'haml-rails'
 gem 'sqlite3'
 
 gem 'bushido', :git => 'https://github.com/Bushido/bushidogem.git'
-gem 'devise_bushido_authenticatable', :path => "../devise_cas_authenticatable" #:git => 'https://github.com/Bushido/devise_cas_authenticatable.git'
+gem 'devise_bushido_authenticatable', :git => 'https://github.com/Bushido/devise_cas_authenticatable.git'
 
-gem 'aws-s3'
-gem 'paperclip'
+gem 'aws-sdk'
+gem 'paperclip', :git => 'https://github.com/Bushido/paperclip.git'
+
+gem 'unicorn'
 
 # Gems used only for assets and not required
 # in production environments by default.
@@ -42,7 +44,7 @@ group :development, :test do
   # Pretty printed test output
   gem 'turn', '~> 0.8.3', :require => false
   gem 'rspec-rails'
-  gem 'tane', :git => 'https://github.com/Bushido/tane.git'
+  gem 'tane', :git => "https://github.com/Bushido/tane.git"
   gem 'factory_girl_rails'
   gem 'jasmine', :git => "https://github.com/pivotal/jasmine-gem.git", :branch => "1.2.rc1"
   gem 'awesome_print'
