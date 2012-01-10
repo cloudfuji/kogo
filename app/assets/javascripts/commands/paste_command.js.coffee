@@ -2,6 +2,8 @@ pasteCommand =
   options:
     pastePattern: /\n.*\n/i
     pasteTemplate: $.template('pasteTemplate', '<pre class="pastie"><a target="_blank" class="pastie-link" href="${ messagePath }">View pastie</a><br/>${ preview }</code></pre>')
+    maxPreviewLength: 300
+    maxPreviewLines:  4
 
   channelId: ->
     $(document).data('channelId')
@@ -18,10 +20,16 @@ pasteCommand =
 
     $holder.append($meta).append($content)
 
+  preview: (content) ->
+    truncated_content = content.split("\n")[0..@options.maxPreviewLines].join("\n")
+    truncated_content = truncated_content.substring(0, @options.maxPreviewLength) if truncated_content.length > @options.maxPreviewLength
+    truncated_content.concat "..."
+
   pasteEmbed: (message) ->
+    console.log message
     messagePath = "/channels/#{ @channelId() }/messages/#{ message.id }"
-    preview = message.content
-    $content = $.tmpl('pasteTemplate', { messagePath: messagePath, preview: preview })
+    # preview = message.content
+    $content = $.tmpl('pasteTemplate', { messagePath: messagePath, preview: @preview(message.content) })
     @defaultTemplate(message, $content)
 
   _init: ->
