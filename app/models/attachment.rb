@@ -5,8 +5,6 @@ class Attachment < ActiveRecord::Base
   belongs_to :user
   belongs_to :message
 
-  ap ENV
-
   has_attached_file :file,
                     :storage         => :s3,
                     :s3_credentials  => {
