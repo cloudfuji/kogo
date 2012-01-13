@@ -1,8 +1,9 @@
 class BushidoUserHooks < Bushido::EventObserver
   def user_added
-    User.create!(:email  => params['data']['email'],
-                 :ido_id => params['data']['ido_id'],
-                 :active => true)
+    user = User.find_or_create_by_idp_id(params['data']['ido_id'])
+
+    user.update_attributes!(:email  => params['data']['email'],
+                            :active => true)
   end
 
   def user_removed
