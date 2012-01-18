@@ -60,7 +60,7 @@ chat_history =
     lastMessageParam = "?last_message_id=#{ @options.latestMessageDisplayed }" unless @options.latestMessageDisplayed == 0
     "/channels/#{ @channelId() }/messages.json#{ lastMessageParam }"
 
-  updateChannel: (cb) ->
+  updateChannel: ->
     if not @options.updateLock
       @options.updateLock = true
       jQuery.get(@updateMessagesUrl(), $.proxy(@processMessages, this))
