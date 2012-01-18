@@ -22,8 +22,7 @@ pasteCommand =
 
   preview: (content) ->
     truncated_content = content.split("\n")[0..@options.maxPreviewLines].join("\n")
-    truncated_content = truncated_content.substring(0, @options.maxPreviewLength) if truncated_content.length > @options.maxPreviewLength
-    truncated_content.concat "..."
+    truncated_content = truncated_content.substring(0, @options.maxPreviewLength).concat "..." if truncated_content.length > @options.maxPreviewLength
 
   pasteEmbed: (message) ->
     console.log message
