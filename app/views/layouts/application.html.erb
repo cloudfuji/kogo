@@ -17,6 +17,9 @@
   <div class="container">
     <header>
       <%= image_tag "logo.png", :alt => "Kogo", :width => "165", :height => "51" %>
+      <% if current_user %>
+       <%= link_to "logout", destroy_user_session_path, :class => "l logout", :method => :delete %>
+      <% end %>
       <form id="search_form">
 	<input class="search_term autobox" name="search_term" type="text" value="Search Archives">
       </form>
