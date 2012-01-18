@@ -14,6 +14,8 @@ chat_history =
     messageTimeTemplate    : $.template('messageTimeTemplate'   , '<span class="message-time">at ${ message.posted_at } </span> '                            )
     messageContentTemplate : $.template('messageContentTemplate', '<div class="message-content">${ message.content }</div></div>'                            )
     meTemplate             : $.template('meTemplate', '<div class="message-content"><strong>*** ${ message.user } ${ message.content }</strong></div></div>' )
+    initFlag               : false
+
 
   _create: ->
     # Adds sets the interval for the updateChannel() function
@@ -58,7 +60,7 @@ chat_history =
     lastMessageParam = "?last_message_id=#{ @options.latestMessageDisplayed }" unless @options.latestMessageDisplayed == 0
     "/channels/#{ @channelId() }/messages.json#{ lastMessageParam }"
 
-  updateChannel: ->
+  updateChannel: (cb) ->
     if not @options.updateLock
       @options.updateLock = true
       jQuery.get(@updateMessagesUrl(), $.proxy(@processMessages, this))
@@ -221,6 +223,10 @@ chat_history =
     if triggerScroll
       @removeOldMessages()
       @scrollToLatestMessage()
+
+    if @options.initFlag == false
+      $('html').scrollTop($(document).height())
+      @options.initFlag = true
 
     @options.updateLock = false
 
