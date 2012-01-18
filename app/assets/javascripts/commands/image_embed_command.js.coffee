@@ -1,7 +1,7 @@
 imageEmbedCommand =
   options:
     imageEmbedPattern: /^http.*\.(jpg|jpeg|gif|png)/i
-    imageTemplate: $.template('imageTemplate', '<div><a target="_blank" href="${ imageUrl }"><img class="image-embed" src="${ imageUrl }" /></a></div>')
+    imageTemplate: $.template('imageTemplate', '<div><a target="_blank" href="${ imageUrl }"><img class="image-embed" src="${ imageUrl }" height="200" width="200" /></a></div>')
 
   currentUser: ->
     $(document).data('me')
