@@ -7,6 +7,18 @@ class Channel < ActiveRecord::Base
   after_create Proc.new { |channel| channel.instantiate_mail_route! }
   before_validation Proc.new { |channel| channel.users ||= {} }
 
+  def self.main
+    Channel.order("created_at").first
+  end
+
+  def self.announce(message)
+    self.main.messages.create!(:user => User.kogo, :content => message)
+  end
+
+  def announce(message)
+    self.messages.create!(:user => User.kogo, :content => message)
+  end
+
   def to_param
     name
   end
