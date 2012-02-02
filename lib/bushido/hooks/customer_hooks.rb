@@ -5,7 +5,7 @@ class BushidoCustomerHooks < Bushido::EventObserver
     name = "#{data['first_name']} #{data['last_name']}"
 
     message = "New customer signed up! #{email}"
-    message += name unless name.blank?
+    message += " - #{name}" unless name.blank?
 
     Channel.announce(message)
   end
