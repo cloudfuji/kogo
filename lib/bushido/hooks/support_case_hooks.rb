@@ -1,22 +1,24 @@
 class BushidoSupportCaseHooks < Bushido::EventObserver
   # Schema:
-  # event[:category] = :support_case
-  # event[:name]     = :opened
-  # event[:data]     = {
+  # {
+  # :category => :support_case,
+  # :name     => :opened,
+  # :data     => {
   #   :author => {
-  #     :email      => params[:email],
-  #     :first_name => user.first_name,
-  #     :last_name  => user.last_name
+  #     :email      => String,
+  #     :first_name => String,
+  #     :last_name  => String,
   #   },
-  #   :title  => params[:message],
-  #   :body   => params[:message],
-  #   :source => params[:source]
+  #   :title  => String,
+  #   :body   => String,
+  #   :source => String
   # }
 
   def support_case_opened
     data   = params['data']
-    email  = data['email']
-    name   = " (#{data['first_name']} #{data['last_name']})" unless data['first_name'].blank?
+    author = data['author']
+    email  = author['email']
+    name   = " (#{author['first_name']} #{author['last_name']})" unless author.nil? || author['first_name'].blank?
     name ||= ""
     title  = data['title']
     source = data['source']
