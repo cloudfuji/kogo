@@ -38,6 +38,7 @@ class BushidoSupportCaseHooks < Bushido::EventObserver
     message += name
     message += " [via #{source}]"
     message += " says, '#{title}'"
+    message += ". See more at #{data['url']}" unless data['url'].nil?
 
     puts "message: #{message}"
 
