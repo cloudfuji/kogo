@@ -1,5 +1,4 @@
 class BushidoEmailHooks < Bushido::EventObserver
-
   def mail_simple
     puts "YAY!"
     puts params.inspect
@@ -33,6 +32,8 @@ class BushidoEmailHooks < Bushido::EventObserver
       # TODO: Send an email to the email explaining they aren't
       # authorized to mail this app/channel
     end
+
+    return :halt
   end
 
   private
