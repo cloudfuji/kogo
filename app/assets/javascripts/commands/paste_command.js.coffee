@@ -15,14 +15,28 @@ pasteCommand =
     me       = ''
     me       = 'me' if message.user == @currentUser()
 
-    $holder  = $.tmpl('messageHolderTemplate',  { message: message, me: me })
-    $meta    = $.tmpl('messageMetaTemplate',    { message: message         })
+    $holder  = $.tmpl('messageHolderTemplate', { message: message, me: me })
+    $meta    = $.tmpl('messageMetaTemplate'  , { message: message         })
+    $author  = $.tmpl('messageAuthorTemplate', { message: message         })
+    $time    = $.tmpl('messageTimeTemplate'  , { message: message         })
 
-    $holder.append($meta).append($content)
+    $holder.append($meta.append($author).append($time)).append($content)
 
   preview: (content) ->
-    truncated_content = content.split("\n")[0..@options.maxPreviewLines].join("\n")
-    truncated_content = truncated_content.substring(0, @options.maxPreviewLength).concat "..." if truncated_content.length > @options.maxPreviewLength
+    truncated_content = content
+    truncated         = false
+
+    if truncated_content.length > @options.maxPreviewLength
+      truncated_content = truncated_content.substring(0, @options.maxPreviewLength)
+      truncated = true
+
+    if truncated_content.split("\n").length > @options.maxPreviewLines
+      truncated_content = truncated_content.split("\n").slice(0, @options.maxPreviewLines).join("\n")
+      truncated = true
+
+    truncated_content = "#{truncated_content}..." if truncated
+
+    return truncated_content
 
   pasteEmbed: (message) ->
     console.log message
