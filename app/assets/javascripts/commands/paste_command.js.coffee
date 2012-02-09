@@ -24,17 +24,14 @@ pasteCommand =
 
   preview: (content) ->
     truncated_content = content
-    truncated         = false
 
     if truncated_content.length > @options.maxPreviewLength
       truncated_content = truncated_content.substring(0, @options.maxPreviewLength)
-      truncated = true
 
     if truncated_content.split("\n").length > @options.maxPreviewLines
       truncated_content = truncated_content.split("\n").slice(0, @options.maxPreviewLines).join("\n")
-      truncated = true
 
-    truncated_content = "#{truncated_content}..." if truncated
+    truncated_content = "#{truncated_content}..." if truncated_content.length != content.length
 
     return truncated_content
 
