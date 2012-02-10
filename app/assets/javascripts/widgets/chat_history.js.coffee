@@ -175,18 +175,28 @@ chat_history =
         messageCopy = {}
         $.extend(messageCopy, message)
         $output = command.process(message).data('content', _content)
+        $output.attr('kogo-command', command.name)
         return @addRawOutputToDisplay($output)
 
   addRawOutputToDisplay: ($output) ->
     $output.appendTo(@element)
 
+
+  runCommandAfterSave: ($element, message)->
+    elementCommand = $element.attr('kogo-command')
+    return false if not elementCommand
+    for command in @registeredCommands()
+      command.afterSave(message, $element) if command.name == elementCommand && command.afterSave
+
+
   checkForPendingMessage: (message) ->
     found = false
-    $('.message-holder').each((index, element) ->
+    $('.message-holder').each((index, element) =>
       $element = $(element)
       _id = $element.attr('id').split("_")[1]
       if _id == "pending"
         metaContent = $element.data('content')
+        @runCommandAfterSave($element, message)
         if metaContent.rubyEscapeHtml() == message.content
           $element.attr('id', "message_#{ message.id }")
           $element.children('.message-meta').children('.message-time').text("at #{ message.posted_at }")
