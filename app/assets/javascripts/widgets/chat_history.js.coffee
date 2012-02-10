@@ -175,7 +175,7 @@ chat_history =
         messageCopy = {}
         $.extend(messageCopy, message)
         $output = command.process(message).data('content', _content)
-        $output.attr('kogo-command', command.name)
+        $output.data('kogo-command', command.name)
         return @addRawOutputToDisplay($output)
 
   addRawOutputToDisplay: ($output) ->
@@ -183,7 +183,7 @@ chat_history =
 
 
   runCommandAfterSave: ($element, message)->
-    elementCommand = $element.attr('kogo-command')
+    elementCommand = $element.data('kogo-command')
     return false if not elementCommand
     for command in @registeredCommands()
       command.afterSave(message, $element) if command.name == elementCommand && command.afterSave
