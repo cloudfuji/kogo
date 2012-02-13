@@ -8,11 +8,11 @@ gem 'rails', '3.1.3'
 gem 'haml-rails'
 gem 'sqlite3'
 
-gem 'bushido', :git => 'https://github.com/Bushido/bushidogem.git'
-gem 'devise_bushido_authenticatable', :git => 'https://github.com/Bushido/devise_cas_authenticatable.git'
+gem 'bushido', '0.0.36'
+gem 'devise_bushido_authenticatable', '1.0.1'
 
 gem 'aws-sdk'
-gem 'paperclip', :git => 'https://github.com/Bushido/paperclip.git'
+gem 'paperclip'
 
 gem 'unicorn'
 
@@ -20,7 +20,7 @@ gem 'unicorn'
 # in production environments by default.
 group :assets do
   gem 'sass-rails', '~> 3.1.5'
-  gem 'compass',    :git=>'https://github.com/chriseppstein/compass.git', :branch=>'master'
+  gem 'compass'
   gem 'coffee-rails', '~> 3.1.1'
   gem 'uglifier', '>= 1.0.3'
 end
@@ -44,8 +44,8 @@ group :development, :test do
   # Pretty printed test output
   gem 'turn', '~> 0.8.3', :require => false
   gem 'rspec-rails'
-  gem 'tane', :git => "https://github.com/Bushido/tane.git"
+  gem 'tane'
   gem 'factory_girl_rails'
-  gem 'jasmine', :git => "https://github.com/pivotal/jasmine-gem.git", :branch => "1.2.rc1"
+  gem 'jasmine'
   gem 'awesome_print'
 end

@@ -1,64 +1,3 @@
-GIT
-  remote: https://github.com/Bushido/bushidogem.git
-  revision: 41660e24f9f7904e5da7a0bb6e63670b572e8692
-  specs:
-    bushido (0.0.35)
-      highline (>= 1.6.1)
-      json (>= 1.4.6)
-      orm_adapter (~> 0.0.3)
-      rest-client (>= 1.6.1)
-
-GIT
-  remote: https://github.com/Bushido/devise_cas_authenticatable.git
-  revision: edd462ac1daa68b4390f41425259dbc7399d60fc
-  specs:
-    devise_bushido_authenticatable (1.0.0)
-      devise (>= 1.0.6)
-      rubycas-client (>= 2.2.1)
-
-GIT
-  remote: https://github.com/Bushido/paperclip.git
-  revision: 2a628d64f4f1ca56f239278c5c0478c1864e55cd
-  specs:
-    paperclip (2.4.5)
-      activerecord (>= 2.3.0)
-      activesupport (>= 2.3.2)
-      cocaine (>= 0.0.2)
-      mime-types
-
-GIT
-  remote: https://github.com/Bushido/tane.git
-  revision: 8c676852b775c3af01addf9c484c93010c860746
-  specs:
-    tane (0.0.1)
-      awesome_print
-      erubis
-      highline
-      rails (~> 3.1)
-      rake
-      rest-client
-
-GIT
-  remote: https://github.com/chriseppstein/compass.git
-  revision: 7d22d3668c30eb920c559888c37a922a227cc06a
-  branch: master
-  specs:
-    compass (0.12.alpha.2.7d22d36)
-      chunky_png (~> 1.2)
-      fssm (>= 0.2.7)
-      sass (~> 3.1)
-
-GIT
-  remote: https://github.com/pivotal/jasmine-gem.git
-  revision: 5a7524ae9eaea4fe106a7aaa90ccfb1bc137abe7
-  branch: 1.2.rc1
-  specs:
-    jasmine (1.2.0.rc1)
-      jasmine-core (>= 1.2.0.rc1)
-      rack (>= 1.1)
-      rspec (>= 1.3.1)
-      selenium-webdriver (>= 0.1.3)
-
 GEM
   remote: http://rubygems.org/
   specs:
@@ -90,6 +29,7 @@ GEM
       activesupport (= 3.1.3)
     activesupport (3.1.3)
       multi_json (~> 1.0)
+    addressable (2.2.6)
     ansi (1.4.1)
     arel (2.2.1)
     awesome_print (1.0.1)
@@ -100,7 +40,12 @@ GEM
       uuidtools (~> 2.1)
     bcrypt-ruby (3.0.1)
     builder (3.0.0)
-    childprocess (0.2.3)
+    bushido (0.0.36)
+      highline (>= 1.6.1)
+      json (>= 1.4.6)
+      orm_adapter (~> 0.0.3)
+      rest-client (>= 1.6.1)
+    childprocess (0.3.1)
       ffi (~> 1.0.6)
     chunky_png (1.2.5)
     cocaine (0.2.1)
@@ -111,10 +56,18 @@ GEM
       coffee-script-source
       execjs
     coffee-script-source (1.1.3)
-    devise (1.5.3)
+    compass (0.11.7)
+      chunky_png (~> 1.2)
+      fssm (>= 0.2.7)
+      sass (~> 3.1)
+    devise (2.0.1)
       bcrypt-ruby (~> 3.0)
       orm_adapter (~> 0.0.3)
+      railties (~> 3.1)
       warden (~> 1.1)
+    devise_bushido_authenticatable (1.0.1)
+      devise (>= 1.0.6)
+      rubycas-client (>= 2.2.1)
     diff-lcs (1.1.3)
     erubis (2.7.0)
     execjs (1.2.12)
@@ -125,7 +78,7 @@ GEM
       factory_girl (~> 2.3.0)
       railties (>= 3.0.0)
     ffi (1.0.11)
-    fssm (0.2.7)
+    fssm (0.2.8.1)
     haml (3.1.4)
     haml-rails (0.3.4)
       actionpack (~> 3.0)
@@ -138,12 +91,19 @@ GEM
       multi_json
       multi_xml
     i18n (0.6.0)
-    jasmine-core (1.2.0.rc1)
+    jasmine (1.1.2)
+      jasmine-core (>= 1.1.0)
+      rack (>= 1.1)
+      rspec (>= 1.3.1)
+      selenium-webdriver (>= 0.1.3)
+    jasmine-core (1.1.0)
     jquery-rails (1.0.19)
       railties (~> 3.0)
       thor (~> 0.14)
     json (1.6.5)
     kgio (2.7.0)
+    launchy (2.0.5)
+      addressable (~> 2.2.6)
     mail (2.3.0)
       i18n (>= 0.4.0)
       mime-types (~> 1.16)
@@ -153,6 +113,11 @@ GEM
     multi_xml (0.4.1)
     nokogiri (1.5.0)
     orm_adapter (0.0.6)
+    paperclip (2.6.0)
+      activerecord (>= 2.3.0)
+      activesupport (>= 2.3.2)
+      cocaine (>= 0.0.2)
+      mime-types
     polyglot (0.3.3)
     rack (1.3.6)
     rack-cache (1.1)
@@ -200,15 +165,15 @@ GEM
       rspec (~> 2.7.0)
     rubycas-client (2.3.8)
       activesupport
-    rubyzip (0.9.5)
+    rubyzip (0.9.6.1)
     sass (3.1.11)
     sass-rails (3.1.5)
       actionpack (~> 3.1.0)
       railties (~> 3.1.0)
       sass (~> 3.1.10)
       tilt (~> 1.3.2)
-    selenium-webdriver (2.15.0)
-      childprocess (>= 0.2.1)
+    selenium-webdriver (2.19.0)
+      childprocess (>= 0.2.5)
       ffi (~> 1.0.9)
       multi_json (~> 1.0.4)
       rubyzip
@@ -217,6 +182,14 @@ GEM
       rack (~> 1.0)
       tilt (~> 1.1, != 1.3.0)
     sqlite3 (1.3.5)
+    tane (0.0.2)
+      awesome_print
+      erubis
+      highline
+      launchy
+      rails (~> 3.1.0)
+      rake
+      rest-client
     thor (0.14.6)
     tilt (1.3.3)
     treetop (1.4.10)
@@ -242,21 +215,21 @@ PLATFORMS
 DEPENDENCIES
   awesome_print
   aws-sdk
-  bushido!
+  bushido (= 0.0.36)
   coffee-rails (~> 3.1.1)
-  compass!
-  devise_bushido_authenticatable!
+  compass
+  devise_bushido_authenticatable (= 1.0.1)
   factory_girl_rails
   haml-rails
-  jasmine!
+  jasmine
   jquery-rails
-  paperclip!
+  paperclip
   rails (= 3.1.3)
   remotipart
   rspec-rails
   sass-rails (~> 3.1.5)
   sqlite3
-  tane!
+  tane
   turn (~> 0.8.3)
   uglifier (>= 1.0.3)
   unicorn
