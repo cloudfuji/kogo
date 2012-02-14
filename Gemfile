@@ -9,7 +9,7 @@ gem 'haml-rails'
 gem 'sqlite3'
 
 gem 'bushido', '0.0.36'
-gem 'devise_bushido_authenticatable', '1.0.2'
+gem 'devise_bushido_authenticatable', '1.0.3'
 
 gem 'aws-sdk'
 gem 'paperclip'
