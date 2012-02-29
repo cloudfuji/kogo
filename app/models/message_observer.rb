@@ -3,7 +3,7 @@ class MessageObserver < ActiveRecord::Observer
 
   def after_create(message)
     User.all.each do |user|
-      if message.content.downcase.include?(user.name.downcase)
+      if !user.name.blank? && message.content.downcase.include?(user.name.downcase) 
         print "Includes user name #{user.name}"
         if message.user_id != user.id # Don't notify the user if they typed their own name
           puts "Sending notification"
