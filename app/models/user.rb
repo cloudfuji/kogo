@@ -1,6 +1,9 @@
 class User < ActiveRecord::Base
   has_many :messages
-  
+
+  # Setup common, nice things to have on Bushido, like User#notify.
+  include Bushido::UserHelper
+
   # Include default devise modules. Others available are:
   # :token_authenticatable, :encryptable, :confirmable, :lockable, :timeoutable and :omniauthable
   devise :bushido_authenticatable, :trackable
