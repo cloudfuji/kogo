@@ -2,7 +2,7 @@ class MessageObserver < ActiveRecord::Observer
   observe :message
 
   def after_create(message)
-    if message.downcase.include?("@all")
+    if message.content.downcase.include?("@all")
       message.channel.users.keys.collect do |user_id|
         User.find(id).notify(message.channel.name, "#{message.user.name}: #{message.content}", "chat")
       end
