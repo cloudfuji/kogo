@@ -27,6 +27,7 @@ audioCommands =
       "claps"    : @localFileUrl("cheer.mp3")
       "kolaveri" : @localFileUrl("kolaveri.mp3")
       "ding"     : @localFileUrl("ding.mp3")
+      "gong"     : @localFileUrl("gong.mp3")
       }
 
     sounds[name]
