@@ -12,7 +12,8 @@ class BushidoUserHooks < Bushido::EventObserver
     # Disable the user instead of destroying them, so all the data
     # associated with them stays (e.g. comments, projects, leads,
     # contacts, etc.)
-    User.find_by_ido_id(params['data']['ido_id']).try(:disable!)
+    user = User.find_by_ido_id(params['data']['ido_id'])
+    user.try(:disable!) if user && user.respond_to?(:disable!)
   end
 
   def user_updated
