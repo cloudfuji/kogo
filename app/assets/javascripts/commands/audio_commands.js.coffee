@@ -23,11 +23,30 @@ audioCommands =
 
   localSounds: (name) ->
     sounds = {
-      "gobushido": @localFileUrl("hey.mp3")
-      "claps"    : @localFileUrl("cheer.mp3")
-      "kolaveri" : @localFileUrl("kolaveri.mp3")
-      "ding"     : @localFileUrl("ding.mp3")
-      "gong"     : @localFileUrl("gong.mp3")
+      "cheer"           : @localFileUrl("cheer.mp3")
+      "ding"            : @localFileUrl("ding.wav")
+      "female_dying"    : @localFileUrl("female_dying.wav")
+      "female_laugh"    : @localFileUrl("female_laugh.wav")
+      "fight"           : @localFileUrl("fight.wav")
+      "final"           : @localFileUrl("final.wav")
+      "gobushido"       : @localFileUrl("hey.mp3")
+      "gong"            : @localFileUrl("gong.mp3")
+      "hadouken"        : @localFileUrl("hadouken.wav")
+      "hey"             : @localFileUrl("hey.mp3")
+      "kolaveri"        : @localFileUrl("kolaveri.mp3")
+      "lose"            : @localFileUrl("lose.wav")
+      "male_dying"      : @localFileUrl("male_dying.wav")
+      "male_laugh"      : @localFileUrl("male_laugh.wav")
+      "perfect"         : @localFileUrl("perfect.wav")
+      "round"           : @localFileUrl("round.wav")
+      "shoryuken"       : @localFileUrl("shoryuken.wav")
+      "sonicboom"       : @localFileUrl("sonicboom.wav")
+      "tetsumaki"       : @localFileUrl("tetsumaki.wav")
+      "win"             : @localFileUrl("win.wav")
+      "yatta"           : @localFileUrl("yatta.wav")
+      "you"             : @localFileUrl("you.wav")
+      "you-win-perfect" : @localFileUrl("you_win_perfect.wav")
+      "you-win-laugh"   : @localFileUrl("you_win_perfect_laugh.wav")
       }
 
     sounds[name]
