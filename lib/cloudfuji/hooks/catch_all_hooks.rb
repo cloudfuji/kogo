@@ -1,4 +1,4 @@
-class BushidoCatchAllHooks < Bushido::EventObserver
+class CloudfujiCatchAllHooks < Cloudfuji::EventObserver
   # The catch_all event should only be defined in a single observer,
   # and is called after checking all observers to see if they first
   # respond to the named event. Therefore, this is the last methods

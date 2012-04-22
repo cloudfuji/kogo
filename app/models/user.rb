@@ -1,12 +1,12 @@
 class User < ActiveRecord::Base
   has_many :messages
 
-  # Setup common, nice things to have on Bushido, like User#notify.
-  include Bushido::UserHelper
+  # Setup common, nice things to have on Cloudfuji, like User#notify.
+  include Cloudfuji::UserHelper
 
   # Include default devise modules. Others available are:
   # :token_authenticatable, :encryptable, :confirmable, :lockable, :timeoutable and :omniauthable
-  devise :bushido_authenticatable, :trackable
+  devise :cloudfuji_authenticatable, :trackable
 
   # Setup accessible (or protected) attributes for your model
   attr_accessible :ido_id, :first_name, :last_name, :email, :password, :password_confirmation, :remember_me
@@ -20,7 +20,7 @@ class User < ActiveRecord::Base
     return self.email.split("@").first
   end
 
-  def bushido_extra_attributes(extra_attributes)
+  def cloudfuji_extra_attributes(extra_attributes)
     self.first_name = extra_attributes["first_name"].to_s
     self.last_name  = extra_attributes["last_name"].to_s
     self.email      = extra_attributes["email"]

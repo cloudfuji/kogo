@@ -1,4 +1,4 @@
-class BushidoUserHooks < Bushido::EventObserver
+class CloudfujiUserHooks < Cloudfuji::EventObserver
   def user_added
     # User might have been added before, so we'll find_or_create them
     # by their permanent_id (ido_id)
@@ -24,7 +24,7 @@ class BushidoUserHooks < Bushido::EventObserver
       # Re-use the CAS login method to set all the extra attributes we
       # care about (first_name, last_name, email, local, timezone,
       # etc.)
-      user.bushido_extra_attributes(data)
+      user.cloudfuji_extra_attributes(data)
       user.save
     end
   end

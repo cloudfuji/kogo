@@ -25,7 +25,7 @@ audio =
     @options.enabled = true
 
     localSounds =
-      "gobushido": @localFileUrl("hey.mp3")
+      "gofuji"   : @localFileUrl("hey.mp3")
       "claps"    : @localFileUrl("cheer.mp3")
       "kolaveri" : @localFileUrl("kolaveri.mp3")
       "ding"     : @localFileUrl("ding.mp3")

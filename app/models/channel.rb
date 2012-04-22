@@ -67,7 +67,7 @@ class Channel < ActiveRecord::Base
   end
 
   def instantiate_mail_route!
-    ::Bushido::Mailroute.map do |m|
+    ::Cloudfuji::Mailroute.map do |m|
       m.route("mail.new_message") do
         m.subject("{:channel_name}", :channel_name => self.name)
       end

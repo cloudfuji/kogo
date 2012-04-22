@@ -29,7 +29,7 @@ audioCommands =
       "female_laugh"    : @localFileUrl("female_laugh.wav")
       "fight"           : @localFileUrl("fight.wav")
       "final"           : @localFileUrl("final.wav")
-      "gobushido"       : @localFileUrl("hey.mp3")
+      "gofuji"          : @localFileUrl("hey.mp3")
       "gong"            : @localFileUrl("gong.mp3")
       "hadouken"        : @localFileUrl("hadouken.wav")
       "hey"             : @localFileUrl("hey.mp3")
