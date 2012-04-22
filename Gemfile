@@ -10,9 +10,9 @@ gem 'remotipart'
 gem 'jquery-rails'
 
 
-# Bushido gems
-gem 'bushido', '0.0.36'
-gem 'devise_bushido_authenticatable', '1.0.3'
+# Cloudfuji gems
+gem 'cloudfuji', '0.0.38'
+gem 'devise_cloudfuji_authenticatable', '1.0.5'
 
 # Network gems
 gem 'aws-sdk'
