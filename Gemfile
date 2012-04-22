@@ -11,7 +11,7 @@ gem 'jquery-rails'
 
 
 # Cloudfuji gems
-gem 'cloudfuji', '0.0.38'
+gem 'cloudfuji', '0.0.39'
 gem 'devise_cloudfuji_authenticatable', '1.0.5'
 
 # Network gems

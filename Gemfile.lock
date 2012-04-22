@@ -43,7 +43,7 @@ GEM
     childprocess (0.3.1)
       ffi (~> 1.0.6)
     chunky_png (1.2.5)
-    cloudfuji (0.0.38)
+    cloudfuji (0.0.39)
       highline (>= 1.6.1)
       json (>= 1.4.6)
       orm_adapter (~> 0.0.3)
@@ -222,7 +222,7 @@ PLATFORMS
 DEPENDENCIES
   awesome_print
   aws-sdk
-  cloudfuji (= 0.0.38)
+  cloudfuji (= 0.0.39)
   coffee-rails (~> 3.1.1)
   compass-rails
   devise_cloudfuji_authenticatable (= 1.0.5)
